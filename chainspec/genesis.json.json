@@ -1,0 +1,62 @@
+{
+	"name": "apM Reward Chain",
+    "dataDir": "apm-reward-chain",
+	"engine": {
+		"authorityRound": {
+			"params": {
+                "blockReward": "0",
+				"stepDuration": "1",
+				"maximumEmptySteps": "600",
+                "emptyStepsTransition": "0",
+				"validators" : {
+					"multi": {
+						"0": { 
+                            "list": [
+                                "0x9950F2Ef40B14Da878f4792b80840386E77C4F40",
+                                "0x7DD7Be9C8dC87b069E2609C9b2d98F55e7E6fbE4",
+                                "0x206477248536747e888C6d486462995dfb8c080d" 
+                                ] 
+                            }
+					}
+				}
+			}
+		}
+	},
+    "params": {
+		"networkID" : "0x114",
+		"gasLimitBoundDivisor": "0x400",
+		"maximumExtraDataSize": "0x2000",
+		"minGasLimit": "0x1388",
+        "maxCodeSize": 24576,
+		"maxCodeSizeTransition": "0x0",
+        "eip98Transition": "0x7fffffffffffff",
+        "eip140Transition": "0x0",
+        "eip145Transition": "0x0",
+		"eip150Transition": "0x0",
+        "eip155Transition": "0x0",
+		"eip160Transition": "0x0",
+		"eip161abcTransition": "0x0",
+		"eip161dTransition": "0x0",
+		"eip210Transition": "0x0",
+		"eip210ContractGas": "0x0",
+		"eip211Transition": "0x0",
+		"eip214Transition": "0x0",
+		"eip658Transition": "0x0",
+		"eip1014Transition": "0x0",
+		"eip1052Transition": "0x0"
+	},
+	"genesis": {
+		"seal": {
+			"authorityRound": {
+				"step": "0x0",
+				"signature": "0x0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+			}
+		},
+		"difficulty": "0x20000",
+		"gasLimit": "0x2fefd8"
+	},
+	
+	"accounts": {
+		"0x5d8A27c3806edA6D0C78Ac1f77fd242f6B58AFDF": { "balance": "1812500000000000000000000000" }
+	}
+}
