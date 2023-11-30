@@ -18,8 +18,7 @@ Since APMs are fixed assets that are no longer being issued, the RAPM used to re
 ```
 # Setup
 git clone https://github.com/apmcoin/apm-reward-layer/
-cd apm-reward-layer/release/
-chmod u+x openethereum
+chmod u+x ~/apm-reward-layer/release/openethereum
 
 
 # Global link
@@ -31,6 +30,26 @@ openethereum --chain dev --jsonrpc-apis personal
 
 
 # Run node
+cd apm-reward-layer
+
+# if validator
+openethereum --config validator-node.toml account new
+vi node.pwds
+{write account password in vi open file}
+
+
+
+
+openethereum --config validator-node.toml
+
+
+
+validator 1 : 0x953624f9dd7cf43e71d7cbe946ca19ff4985751b
+
+
+
+cd ~/apm-reward-layer/
+mv node.toml.example ~/.local/share/openethereum/chains
 
 
 cd ~/apm-reward-layer/
