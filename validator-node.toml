@@ -1,5 +1,5 @@
 [parity]
-chain = "~/apm-reward-layer/chain/rapm.json"
+chain = "rapm.json"
 
 [rpc]
 #  JSON-RPC will be listening for connections on IP 0.0.0.0.

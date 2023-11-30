@@ -21,10 +21,28 @@ git clone https://github.com/apmcoin/apm-reward-layer/
 cd apm-reward-layer/release/
 chmod u+x openethereum
 
+
+# Global link
+sudo ln -s ~/apm-reward-layer/release/openethereum /usr/local/bin/
+
+
 # Testing
-./openethereum --chain dev --jsonrpc-apis personal
+openethereum --chain dev --jsonrpc-apis personal
 
 
+# Run node
+
+
+cd ~/apm-reward-layer/
+cp chain/rapm.json ~/.local/share/openethereum/chains
+cp config.toml.example ~/.local/share/openethereum/chains/node.toml config.toml
+
+cd ~/.local/share/openethereum/chains/node.toml
+
+cp 
+
+~/.local/share/openethereum/chains
+cd ~/apm-reward-layer/
 
 
 
