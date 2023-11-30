@@ -10,7 +10,28 @@ Since APMs are fixed assets that are no longer being issued, the RAPM used to re
 
 ## Detail Infomation
 - [Building Core](./core/README.md)
+- [Validator Setup Ref](https://openethereum.github.io/Validator-Set-Tutorial-1)
 - [RAPM Chainspec](./chainspec/genesis.json)
+
+
+## Start script (#for Ubuntu 20.x)
+```
+# Setup
+git clone https://github.com/apmcoin/apm-reward-layer/
+cd apm-reward-layer/release/
+chmod u+x openethereum
+
+# Testing
+./openethereum --chain dev --jsonrpc-apis personal
+
+
+
+
+
+
+
+
+```
 
 
 ## License

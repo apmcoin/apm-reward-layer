@@ -1,0 +1,23 @@
+[parity]
+chain = "rapm.json"
+
+[rpc]
+#  JSON-RPC will be listening for connections on IP 0.0.0.0.
+# interface = "0.0.0.0"
+port = 8545
+# Only selected APIs will be exposed over this interface.
+apis = ["web3", "eth", "pubsub", "net", "parity", "traces", "personal"]
+
+[network]
+#bootnodes = []
+
+[account]
+# password = ["node.pwds"]
+
+[mining]
+# Account address to receive reward when block is mined.
+# author = ""
+# Account to sign consensus messages and issue blocks for non-PoW chains.
+# engine_signer = ""=
+# Prepare a block to seal even when there are no miners connected.
+force_sealing = true
