@@ -45,6 +45,7 @@ vi node.pwds
 #Run
 openethereum --config ~/.local/share/openethereum/chains/node.toml
 
+# (genesis only) Update Bootnode
 ```
 
 
