@@ -24,49 +24,26 @@ chmod u+x ~/apm-reward-layer/release/openethereum
 # Global link
 sudo ln -s ~/apm-reward-layer/release/openethereum /usr/local/bin/
 
-
 # Testing
 openethereum --chain dev --jsonrpc-apis personal
 
+# Add Chain Infomation
+cp ~/apm-reward-layer/rapm.json ~/.local/share/openethereum/chains
 
-# Run node
-cd apm-reward-layer
 
-# if validator
-openethereum --config validator-node.toml account new
+# (validator only) pub key to update rapm.jeon and git sync
+openethereum --config validator-node.toml --chain ~/apm-reward-layer/rapm.json ~/.local/s account new
+cd ~/.local/share/openethereum/chains/
 vi node.pwds
-{write account password in vi open file}
+# save pwds key
+vi node.toml
+cp ~/apm-reward-layer/validator-node.toml ~/.local/share/openethereum/chains/node.toml
+vi node.pwds
+# add pub address to engine-signer
+# add password = ["node.pwds"]
 
-
-
-
-openethereum --config validator-node.toml
-
-
-
-validator 1 : 0x953624f9dd7cf43e71d7cbe946ca19ff4985751b
-
-
-
-cd ~/apm-reward-layer/
-mv node.toml.example ~/.local/share/openethereum/chains
-
-
-cd ~/apm-reward-layer/
-cp chain/rapm.json ~/.local/share/openethereum/chains
-cp config.toml.example ~/.local/share/openethereum/chains/node.toml config.toml
-
-cd ~/.local/share/openethereum/chains/node.toml
-
-cp 
-
-~/.local/share/openethereum/chains
-cd ~/apm-reward-layer/
-
-
-
-
-
+#Run
+openethereum --config ~/.local/share/openethereum/chains/node.toml
 
 ```
 

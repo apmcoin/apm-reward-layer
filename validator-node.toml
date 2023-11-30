@@ -18,6 +18,6 @@ apis = ["web3", "eth", "pubsub", "net", "parity", "traces", "personal"]
 # Account address to receive reward when block is mined.
 # author = ""
 # Account to sign consensus messages and issue blocks for non-PoW chains.
-# engine_signer = ""=
+# engine_signer = ""
 # Prepare a block to seal even when there are no miners connected.
 force_sealing = true
