@@ -53,7 +53,7 @@ vi node.pwds
 ```
 
 
-# Validator Run
+# Validator Node Running Test
 ```
 cd ~/.local/share/openethereum/chains
 openethereum --config node.toml
@@ -61,7 +61,7 @@ openethereum --config node.toml
 # if you first run, Update Bootnode info to toml file and sync
 ```
 
-# RPC Node
+# RPC Node Runing Test
 ```
 # Setup
 vi ~/.local/share/openethereum/chains/node.toml
@@ -72,14 +72,14 @@ cd ~/.local/share/openethereum/chains
 openethereum --config node.toml
 ```
 
-# auto restart
+# Node Auto restart (using PM2)
 ```
-cd apm-reward-layer
+cd ~/apm-reward-layer
 
 sudo apt update
 sudo apt install nodejs
 sudo apt install npm
-npm install pm2 -g
+sudo npm install pm2 -g
 
 chmod +x auto-start-rapm.sh
 ./auto-start-rapm.sh
