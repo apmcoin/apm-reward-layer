@@ -14,3 +14,5 @@ Cargo.lock
 *.pdb
 
 validator-node.toml
+
+logs/
