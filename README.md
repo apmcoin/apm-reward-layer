@@ -83,7 +83,13 @@ sudo npm install pm2 -g
 
 chmod +x auto-start-rapm.sh
 ./auto-start-rapm.sh
+pm2 save
+pm2 startup
+```
 
+# Tail log
+```
+pm2 monit
 ```
 
 ## License
