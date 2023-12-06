@@ -1,7 +1,7 @@
 # rAPM - apM Reward Layer
 Off-chain reward bridging mainnet designed for real world business
 
-- OpenEthereum based POA Mainnet 
+- OpenEthereum based POA Mainnet (Can enable on-chain consensus on a contract base)
 - No mining rewards, earn and utilize rAPM (like ETH) by bridging APM Tokens on the Ethereum mainnet
 - Only authorized business users can access nodes directly. End users are utilized through end user services such as [apM Members](https://apm-members.com/).
 
