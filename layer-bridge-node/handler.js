@@ -12,7 +12,6 @@ const layerHashBridgeContractAddress = process.env.LAYER_HASH_BRIDGE_CONTRACT_AD
 // Initialize ethers providers
 const rapmProvider = new ethers.providers.JsonRpcProvider(rapmRpcUrl);
 const baseProvider = new ethers.providers.JsonRpcProvider(baseRpcUrl);
-
 // Create a wallet and connect it to the base chain provider
 const wallet = new ethers.Wallet(privateKey, baseProvider);
 
@@ -26,6 +25,13 @@ async function recordBlockHash() {
         const latestBlockNumber = await rapmProvider.getBlockNumber();
         const latestBlock = await rapmProvider.getBlock(latestBlockNumber);
         const latestBlockHash = latestBlock.hash;
+
+        // Check if this block hash has already been recorded
+        const existingHash = await layerHashBridgeContract.getBlockHash(latestBlockNumber);
+        if(existingHash === latestBlockHash) {
+            logger.info(`Block hash for block number ${latestBlockNumber} already recorded. Skipping.`);
+            return;
+        }
 
         // Record the block hash on the Coinbase base chain
         const tx = await layerHashBridgeContract.recordBlockHash(latestBlockNumber, latestBlockHash);
