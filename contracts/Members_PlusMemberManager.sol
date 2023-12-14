@@ -8,7 +8,8 @@ contract Members_PlusMemberManager {
     Roles.Role private owners;
     Roles.Role private managers;
     mapping(bytes32 => bool) private plusMembers;
-    bytes32[] private memberList; // Array to store all member UUIDs
+    mapping(bytes32 => uint256) private memberIndex; // Track index of each member in memberList
+    bytes32[] private memberList;
 
     event ManagerAdded(address indexed account);
     event ManagerRemoved(address indexed account);
@@ -43,20 +44,32 @@ contract Members_PlusMemberManager {
         for (uint i = 0; i < uuids.length; i++) {
             if (!plusMembers[uuids[i]]) {
                 plusMembers[uuids[i]] = true;
+                memberIndex[uuids[i]] = memberList.length;
                 memberList.push(uuids[i]);
                 emit PlusMemberAdded(uuids[i]);
             }
         }
     }
 
-    function removePlusMember(bytes32 uuid) public onlyManager {
-        require(plusMembers[uuid], "Member not found.");
-        plusMembers[uuid] = false;
-        emit PlusMemberRemoved(uuid);
+    function removePlusMembers(bytes32[] memory uuids) public onlyManager {
+        for (uint i = 0; i < uuids.length; i++) {
+            if (plusMembers[uuids[i]]) {
+                plusMembers[uuids[i]] = false;
+
+                // Remove member from memberList
+                uint256 index = memberIndex[uuids[i]];
+                bytes32 lastMember = memberList[memberList.length - 1];
+                memberList[index] = lastMember; // Move the last member to the removed spot
+                memberIndex[lastMember] = index;
+                memberList.length--; // Reduce the array length
+
+                emit PlusMemberRemoved(uuids[i]);
+            }
+        }
     }
 
-    function getPlusMembers() public view returns (bytes32[] memory) {
-        return memberList;
+    function getPlusMemberCount() public view returns (uint256) {
+        return memberList.length;
     }
 
     // Additional functions for role checks, etc.
