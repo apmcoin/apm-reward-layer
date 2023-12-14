@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 import "./openzeppelin-contracts/access/AccessControl.sol";
 
 //상위 레이어 앵커링을 위한 브릿지 노드 계약
-contract BridgeNode is AccessControl {
+contract LayerBridgeNode is AccessControl {
     bytes32 public constant WRITER_ROLE = keccak256("WRITER_ROLE");
     event BlockHashRecorded(uint256 indexed blockNumber, bytes32 blockHash);
 
