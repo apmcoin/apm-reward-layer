@@ -92,6 +92,9 @@ pm2 startup
 ## Tail log
 ```
 pm2 monit
+
+//for cloud monitoring
+pm2 pluc
 ```
 
 ## Infomation
