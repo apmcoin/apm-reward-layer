@@ -55,7 +55,7 @@ vi node.pwds
 ```
 
 
-# Validator Node Running Test
+## Validator Node Running Test
 ```
 cd ~/.local/share/openethereum/chains
 openethereum --config node.toml
@@ -63,7 +63,7 @@ openethereum --config node.toml
 # if you first run, Update Bootnode info to toml file and sync
 ```
 
-# RPC Node Runing Test
+## RPC Node Runing Test
 ```
 # Setup
 vi ~/.local/share/openethereum/chains/node.toml
@@ -74,7 +74,7 @@ cd ~/.local/share/openethereum/chains
 openethereum --config node.toml
 ```
 
-# Node Auto restart (using PM2)
+## Node Auto restart (using PM2)
 ```
 cd ~/apm-reward-layer
 
@@ -89,12 +89,12 @@ pm2 save
 pm2 startup
 ```
 
-# Tail log
+## Tail log
 ```
 pm2 monit
 ```
 
-# Infomation
+## Infomation
 The address `0x5d8A27c3806edA6D0C78Ac1f77fd242f6B58AFDF`is the vault for connecting the apM Reward Layer mainnet to the ERC-20 apM on public mainnet.
 You can find more information directly in the Genesis configuration file.
 
