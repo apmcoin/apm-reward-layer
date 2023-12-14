@@ -94,5 +94,9 @@ pm2 startup
 pm2 monit
 ```
 
+# Infomation
+The address `0x5d8A27c3806edA6D0C78Ac1f77fd242f6B58AFDF`is the vault for connecting the apM Reward Layer mainnet to the ERC-20 apM on public mainnet.
+You can find more information directly in the Genesis configuration file.
+
 ## License
 [LICENSE](./openethereum/LICENSE)
