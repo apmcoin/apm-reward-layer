@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity 0.8.20;
 
 import "./openzeppelin-contracts/access/AccessControl.sol";
 
@@ -12,7 +12,8 @@ contract LayerBridgeNode is AccessControl {
     address[] private writers;
 
     constructor() {
-        _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
+        grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
+        grantRole(WRITER_ROLE, msg.sender); // API KEY USER
     }
 
     function recordBlockHash(uint256 blockNumber, bytes32 blockHash) public onlyRole(WRITER_ROLE) {
