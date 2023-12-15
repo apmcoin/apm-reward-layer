@@ -1,8 +1,8 @@
-pragma solidity ^0.5.6;
+pragma solidity 0.5.6;
 
 import "./rapm-contracts/access/Roles.sol";
 
-contract Members_PlusMemberManager {
+contract PlusMemberManager {
     using Roles for Roles.Role;
 
     Roles.Role private owners;
@@ -72,5 +72,16 @@ contract Members_PlusMemberManager {
         return memberList.length;
     }
 
-    // Additional functions for role checks, etc.
+    function isOwner(address account) public view returns (bool) {
+        return owners.has(account);
+    }
+
+    function isManager(address account) public view returns (bool) {
+        return managers.has(account);
+    }
+
+    function isPlusMember(bytes32 uuid) public view returns (bool) {
+        return plusMembers[uuid];
+    }
+
 }
