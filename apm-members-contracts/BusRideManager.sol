@@ -4,22 +4,31 @@ import "./ManagerRole.sol";
 
 contract BusRideManager is ManagerRole {
     struct BusRide {
-        bytes32 uuid;
-        string location;
+        bytes32 userUuid;
+        uint location; // Location now an integer
         uint256 timestamp;
     }
 
     BusRide[] public rides;
+    mapping(uint => string) public locationDescriptions;
 
-    event RideRecorded(bytes32 uuid, string location, uint256 timestamp);
+    event RideRecorded(bytes32 userUuid, uint location, uint256 timestamp);
 
-    function recordRide(bytes32 uuid, string memory location, uint256 timestamp) public onlyManager {
+    function recordRide(bytes32 userUuid, uint location, uint256 timestamp) public onlyManager {
         rides.push(BusRide({
-            uuid: uuid,
+            userUuid: userUuid,
             location: location,
             timestamp: timestamp
         }));
-        emit RideRecorded(uuid, location, timestamp);
+        emit RideRecorded(userUuid, location, timestamp);
+    }
+
+    function setLocationDescription(uint location, string memory description) public onlyManager {
+        locationDescriptions[location] = description;
+    }
+
+    function getLocationDescription(uint location) public view returns (string memory) {
+        return locationDescriptions[location];
     }
 
     function getRideCount() public view returns (uint256) {
