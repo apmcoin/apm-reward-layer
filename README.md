@@ -64,7 +64,6 @@ openethereum --config node.toml
 ## RPC Node Setuo & Running Test
 ```
 # Setup
-cd ~/apm-re
 cp ~/apm-reward-layer/rpc-node.toml.sample ~/.local/share/openethereum/chains/node.toml
 
 # Run
