@@ -1,8 +1,6 @@
 # rAPM - apM Reward Layer
 Off-chain reward bridging mainnet designed for real world business
 
-`This is a replicated repository for public information sharing. apM Rewards Layer is the mainnet for business participants, and if you want to run a node or utilize the API, please contact the project.`
-
 - OpenEthereum based POA Mainnet (Can enable on-chain consensus on a contract base)
 - No mining rewards, earn and utilize rAPM (like ETH) by bridging APM Tokens on the Ethereum mainnet
 - Only authorized business users can access nodes directly. End users are utilized through end user services such as [apM Members](https://apm-members.com/).
@@ -30,7 +28,7 @@ sudo ln -s ~/apm-reward-layer/release/openethereum /usr/local/bin/
 openethereum --chain dev --jsonrpc-apis personal
 
 cd apm-reward-layer
-cp rapm.json ~/.local/share/openethereum/chains/rapm.json
+cp ~/apm-reward-layer/rapm.json ~/.local/share/openethereum/chains/rapm.json
 ```
 
 ## Validator Setup
@@ -63,11 +61,11 @@ openethereum --config node.toml
 # if you first run, Update Bootnode info to toml file and sync
 ```
 
-## RPC Node Runing Test
+## RPC Node Setuo & Running Test
 ```
 # Setup
-vi ~/.local/share/openethereum/chains/node.toml
-cp validator-node.toml.sample ~/.local/share/openethereum/chains/node.toml
+cd ~/apm-re
+cp ~/apm-reward-layer/rpc-node.toml.sample ~/.local/share/openethereum/chains/node.toml
 
 # Run
 cd ~/.local/share/openethereum/chains
