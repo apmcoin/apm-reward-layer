@@ -14,29 +14,17 @@ Since APMs are fixed assets that are no longer being issued, the RAPM used to re
 - [RAPM Chainspec](./chainspec/genesis.json)
 
 
-## Default Setup (#for Ubuntu 20.x)
+## Validator Setup (#for Ubuntu 20.x)
 ```
-# Setup
+# Default Setup
 git clone https://github.com/apmcoin/apm-reward-layer/
 chmod u+x ~/apm-reward-layer/release/openethereum
-
-
-# Global link
 sudo ln -s ~/apm-reward-layer/release/openethereum /usr/local/bin/
-
-# Testing
-openethereum --chain dev --jsonrpc-apis personal
-
-cd apm-reward-layer
 cp ~/apm-reward-layer/rapm.json ~/.local/share/openethereum/chains/rapm.json
-```
 
-## Validator Setup
-```
-# Copy and Edit Validator toml file
+# Validator Info
 cd apm-reward-layer
 cp validator-node.toml.sample ~/.local/share/openethereum/chains/node.toml
-
 
 # Create EVM Account
 openethereum --config validator-node.toml --chain rapm.json account new
@@ -61,17 +49,18 @@ openethereum --config node.toml
 # if you first run, Update Bootnode info to toml file and sync
 ```
 
-## RPC Node Setuo & Running Test
+## RPC Node Setup
 ```
-# Setup
+git clone https://github.com/apmcoin/apm-reward-layer/
+chmod u+x ~/apm-reward-layer/release/openethereum
+sudo ln -s ~/apm-reward-layer/release/openethereum /usr/local/bin/
+cp ~/apm-reward-layer/rapm.json ~/.local/share/openethereum/chains/rapm.json
 cp ~/apm-reward-layer/rpc-node.toml.sample ~/.local/share/openethereum/chains/node.toml
-
-# Run
 cd ~/.local/share/openethereum/chains
 openethereum --config node.toml
 ```
 
-## Node Auto restart (using PM2)
+## Node Auto restart
 ```
 cd ~/apm-reward-layer
 
