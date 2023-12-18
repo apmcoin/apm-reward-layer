@@ -80,8 +80,7 @@ sudo apt install nodejs
 sudo apt install npm
 sudo npm install pm2 -g
 
-chmod +x auto-start-rapm.sh
-./auto-start-rapm.sh
+pm2 start openethereum --name rapm-node -- --config ~/.local/share/openethereum/chains/node.toml
 pm2 save
 pm2 startup
 ```

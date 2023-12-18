@@ -1,3 +1,2 @@
 #!/bin/bash
-cd ~/.local/share/openethereum/chains
-pm2 start openethereum --name rapm-node -- --config node.toml
+pm2 start openethereum --name rapm-node -- --config ~/.local/share/openethereum/chains/node.toml
