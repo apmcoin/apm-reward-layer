@@ -47,31 +47,34 @@ cd ~/.local/share/openethereum/chains
 openethereum --config node.toml
 
 # if you first run, Update Bootnode info to toml file and sync
+
 ```
 
-## RPC Node Setup
+## RPC Node Setup & Startup
 ```
+# Setup
 git clone https://github.com/apmcoin/apm-reward-layer/
 chmod u+x ~/apm-reward-layer/release/openethereum
 sudo ln -s ~/apm-reward-layer/release/openethereum /usr/local/bin/
 cp ~/apm-reward-layer/rapm.json ~/.local/share/openethereum/chains/rapm.json
 cp ~/apm-reward-layer/rpc-node.toml.sample ~/.local/share/openethereum/chains/node.toml
+
+# Test
 cd ~/.local/share/openethereum/chains
 openethereum --config node.toml
-```
 
-## Node Auto restart
-```
-cd ~/apm-reward-layer
-
+# Startup
 sudo apt update
 sudo apt install nodejs
 sudo apt install npm
 sudo npm install pm2 -g
 
-pm2 start openethereum --name rapm-node -- --config ~/.local/share/openethereum/chains/node.toml
+pm2 start openethereum --name rapm-node -- --config node.toml
 pm2 save
 pm2 startup
+
+pm2 logs
+
 ```
 
 ## Tail log
