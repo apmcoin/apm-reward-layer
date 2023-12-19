@@ -2,7 +2,7 @@ pragma solidity 0.5.6;
 
 import "./ManagerRole.sol";
 
-contract User {
+contract AbstractUser {
   bytes32 public userId;
   ManagerRole public managerContract;
   
