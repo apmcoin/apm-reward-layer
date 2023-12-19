@@ -545,17 +545,9 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ReentrancyGuard__factory>;
     getContractFactory(
-      name: "User",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.User__factory>;
-    getContractFactory(
       name: "UserFactory",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.UserFactory__factory>;
-    getContractFactory(
-      name: "UserManager",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.UserManager__factory>;
 
     getContractAt(
       name: "AbstractUser",
@@ -1223,20 +1215,10 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.ReentrancyGuard>;
     getContractAt(
-      name: "User",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.User>;
-    getContractAt(
       name: "UserFactory",
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.UserFactory>;
-    getContractAt(
-      name: "UserManager",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.UserManager>;
 
     // default types
     getContractFactory(

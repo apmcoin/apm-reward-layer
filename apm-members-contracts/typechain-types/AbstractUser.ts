@@ -20,8 +20,9 @@ import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 export interface AbstractUserInterface extends utils.Interface {
   functions: {
     "managerContract()": FunctionFragment;
+    "removeItemToInventory(uint256)": FunctionFragment;
+    "inventory(uint256)": FunctionFragment;
     "userId()": FunctionFragment;
-    "userInventory(uint256)": FunctionFragment;
     "addItemToInventory(uint256)": FunctionFragment;
     "checkInventory(uint256)": FunctionFragment;
   };
@@ -30,11 +31,15 @@ export interface AbstractUserInterface extends utils.Interface {
     functionFragment: "managerContract",
     values?: undefined
   ): string;
-  encodeFunctionData(functionFragment: "userId", values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "userInventory",
+    functionFragment: "removeItemToInventory",
     values: [BigNumberish]
   ): string;
+  encodeFunctionData(
+    functionFragment: "inventory",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(functionFragment: "userId", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "addItemToInventory",
     values: [BigNumberish]
@@ -48,11 +53,12 @@ export interface AbstractUserInterface extends utils.Interface {
     functionFragment: "managerContract",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "userId", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "userInventory",
+    functionFragment: "removeItemToInventory",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "inventory", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "userId", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "addItemToInventory",
     data: BytesLike
@@ -94,12 +100,17 @@ export interface AbstractUser extends BaseContract {
   functions: {
     managerContract(overrides?: CallOverrides): Promise<[string]>;
 
-    userId(overrides?: CallOverrides): Promise<[string]>;
+    removeItemToInventory(
+      itemId: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
 
-    userInventory(
+    inventory(
       arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
+
+    userId(overrides?: CallOverrides): Promise<[string]>;
 
     addItemToInventory(
       itemId: BigNumberish,
@@ -114,12 +125,14 @@ export interface AbstractUser extends BaseContract {
 
   managerContract(overrides?: CallOverrides): Promise<string>;
 
-  userId(overrides?: CallOverrides): Promise<string>;
+  removeItemToInventory(
+    itemId: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
 
-  userInventory(
-    arg0: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
+  inventory(arg0: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+
+  userId(overrides?: CallOverrides): Promise<string>;
 
   addItemToInventory(
     itemId: BigNumberish,
@@ -134,12 +147,14 @@ export interface AbstractUser extends BaseContract {
   callStatic: {
     managerContract(overrides?: CallOverrides): Promise<string>;
 
-    userId(overrides?: CallOverrides): Promise<string>;
-
-    userInventory(
-      arg0: BigNumberish,
+    removeItemToInventory(
+      itemId: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<boolean>;
+    ): Promise<void>;
+
+    inventory(arg0: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+
+    userId(overrides?: CallOverrides): Promise<string>;
 
     addItemToInventory(
       itemId: BigNumberish,
@@ -157,12 +172,17 @@ export interface AbstractUser extends BaseContract {
   estimateGas: {
     managerContract(overrides?: CallOverrides): Promise<BigNumber>;
 
-    userId(overrides?: CallOverrides): Promise<BigNumber>;
+    removeItemToInventory(
+      itemId: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
-    userInventory(
+    inventory(
       arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
+
+    userId(overrides?: CallOverrides): Promise<BigNumber>;
 
     addItemToInventory(
       itemId: BigNumberish,
@@ -178,12 +198,17 @@ export interface AbstractUser extends BaseContract {
   populateTransaction: {
     managerContract(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    userId(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    removeItemToInventory(
+      itemId: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
 
-    userInventory(
+    inventory(
       arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
+
+    userId(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     addItemToInventory(
       itemId: BigNumberish,

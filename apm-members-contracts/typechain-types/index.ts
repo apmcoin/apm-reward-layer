@@ -134,9 +134,7 @@ export type { IERC777 } from "./IERC777";
 export type { IERC777Recipient } from "./IERC777Recipient";
 export type { IERC777Sender } from "./IERC777Sender";
 export type { ReentrancyGuard } from "./ReentrancyGuard";
-export type { User } from "./User";
 export type { UserFactory } from "./UserFactory";
-export type { UserManager } from "./UserManager";
 
 export { AbstractUser__factory } from "./factories/AbstractUser__factory";
 export { ApmMembersPlusSBT__factory } from "./factories/ApmMembersPlusSBT__factory";
@@ -271,6 +269,4 @@ export { IERC777__factory } from "./factories/IERC777__factory";
 export { IERC777Recipient__factory } from "./factories/IERC777Recipient__factory";
 export { IERC777Sender__factory } from "./factories/IERC777Sender__factory";
 export { ReentrancyGuard__factory } from "./factories/ReentrancyGuard__factory";
-export { User__factory } from "./factories/User__factory";
 export { UserFactory__factory } from "./factories/UserFactory__factory";
-export { UserManager__factory } from "./factories/UserManager__factory";

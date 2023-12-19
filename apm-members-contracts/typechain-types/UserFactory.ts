@@ -18,13 +18,26 @@ import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 
 export interface UserFactoryInterface extends utils.Interface {
   functions: {
+    "userCount()": FunctionFragment;
+    "managerContract()": FunctionFragment;
     "addManager(address)": FunctionFragment;
+    "getUserCA(bytes32)": FunctionFragment;
     "createUser(bytes32)": FunctionFragment;
     "removeManager(address)": FunctionFragment;
+    "userList(bytes32)": FunctionFragment;
     "isManager(address)": FunctionFragment;
   };
 
+  encodeFunctionData(functionFragment: "userCount", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "managerContract",
+    values?: undefined
+  ): string;
   encodeFunctionData(functionFragment: "addManager", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "getUserCA",
+    values: [BytesLike]
+  ): string;
   encodeFunctionData(
     functionFragment: "createUser",
     values: [BytesLike]
@@ -33,14 +46,22 @@ export interface UserFactoryInterface extends utils.Interface {
     functionFragment: "removeManager",
     values: [string]
   ): string;
+  encodeFunctionData(functionFragment: "userList", values: [BytesLike]): string;
   encodeFunctionData(functionFragment: "isManager", values: [string]): string;
 
+  decodeFunctionResult(functionFragment: "userCount", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "managerContract",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "addManager", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "getUserCA", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "createUser", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "removeManager",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "userList", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "isManager", data: BytesLike): Result;
 
   events: {
@@ -93,10 +114,19 @@ export interface UserFactory extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    userCount(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    managerContract(overrides?: CallOverrides): Promise<[string]>;
+
     addManager(
       account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
+
+    getUserCA(
+      userId: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<[string] & { userCA: string }>;
 
     createUser(
       userId: BytesLike,
@@ -108,13 +138,21 @@ export interface UserFactory extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    userList(arg0: BytesLike, overrides?: CallOverrides): Promise<[string]>;
+
     isManager(account: string, overrides?: CallOverrides): Promise<[boolean]>;
   };
+
+  userCount(overrides?: CallOverrides): Promise<BigNumber>;
+
+  managerContract(overrides?: CallOverrides): Promise<string>;
 
   addManager(
     account: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
+
+  getUserCA(userId: BytesLike, overrides?: CallOverrides): Promise<string>;
 
   createUser(
     userId: BytesLike,
@@ -126,14 +164,24 @@ export interface UserFactory extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  userList(arg0: BytesLike, overrides?: CallOverrides): Promise<string>;
+
   isManager(account: string, overrides?: CallOverrides): Promise<boolean>;
 
   callStatic: {
+    userCount(overrides?: CallOverrides): Promise<BigNumber>;
+
+    managerContract(overrides?: CallOverrides): Promise<string>;
+
     addManager(account: string, overrides?: CallOverrides): Promise<void>;
+
+    getUserCA(userId: BytesLike, overrides?: CallOverrides): Promise<string>;
 
     createUser(userId: BytesLike, overrides?: CallOverrides): Promise<void>;
 
     removeManager(account: string, overrides?: CallOverrides): Promise<void>;
+
+    userList(arg0: BytesLike, overrides?: CallOverrides): Promise<string>;
 
     isManager(account: string, overrides?: CallOverrides): Promise<boolean>;
   };
@@ -152,10 +200,16 @@ export interface UserFactory extends BaseContract {
   };
 
   estimateGas: {
+    userCount(overrides?: CallOverrides): Promise<BigNumber>;
+
+    managerContract(overrides?: CallOverrides): Promise<BigNumber>;
+
     addManager(
       account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
+
+    getUserCA(userId: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
 
     createUser(
       userId: BytesLike,
@@ -166,14 +220,25 @@ export interface UserFactory extends BaseContract {
       account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
+
+    userList(arg0: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
 
     isManager(account: string, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
+    userCount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    managerContract(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     addManager(
       account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    getUserCA(
+      userId: BytesLike,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     createUser(
@@ -184,6 +249,11 @@ export interface UserFactory extends BaseContract {
     removeManager(
       account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    userList(
+      arg0: BytesLike,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     isManager(
