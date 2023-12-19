@@ -17,7 +17,7 @@ import { FunctionFragment, Result, EventFragment } from "@ethersproject/abi";
 import { Listener, Provider } from "@ethersproject/providers";
 import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 
-export interface ApMMembersPlusSBTInterface extends utils.Interface {
+export interface ApmMembersPlusSBTInterface extends utils.Interface {
   functions: {
     "currentTokenId()": FunctionFragment;
     "mintNext(address)": FunctionFragment;
@@ -188,12 +188,12 @@ export type ApprovalForAllEvent = TypedEvent<
 
 export type ApprovalForAllEventFilter = TypedEventFilter<ApprovalForAllEvent>;
 
-export interface ApMMembersPlusSBT extends BaseContract {
+export interface ApmMembersPlusSBT extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: ApMMembersPlusSBTInterface;
+  interface: ApmMembersPlusSBTInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

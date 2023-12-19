@@ -3,7 +3,7 @@ pragma solidity ^0.5.6;
 import "./rapm-contracts/token/ERC721/ERC721.sol";
 import "./rapm-contracts/ownership/Ownable.sol";
 
-contract apMMembersPlusSBT is ERC721, Ownable {
+contract ApmMembersPlusSBT is ERC721, Ownable {
     using SafeMath for uint256;
 
     uint256 private _tokenIds; // 토큰 ID 카운터

@@ -13,9 +13,13 @@ import * as Contracts from ".";
 declare module "hardhat/types/runtime" {
   interface HardhatEthersHelpers extends HardhatEthersHelpersBase {
     getContractFactory(
-      name: "ApMMembersPlusSBT",
+      name: "AbstractUser",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.ApMMembersPlusSBT__factory>;
+    ): Promise<Contracts.AbstractUser__factory>;
+    getContractFactory(
+      name: "ApmMembersPlusSBT",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ApmMembersPlusSBT__factory>;
     getContractFactory(
       name: "BusRideManager",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -545,15 +549,24 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.User__factory>;
     getContractFactory(
+      name: "UserFactory",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.UserFactory__factory>;
+    getContractFactory(
       name: "UserManager",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.UserManager__factory>;
 
     getContractAt(
-      name: "ApMMembersPlusSBT",
+      name: "AbstractUser",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.ApMMembersPlusSBT>;
+    ): Promise<Contracts.AbstractUser>;
+    getContractAt(
+      name: "ApmMembersPlusSBT",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ApmMembersPlusSBT>;
     getContractAt(
       name: "BusRideManager",
       address: string,
@@ -1214,6 +1227,11 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.User>;
+    getContractAt(
+      name: "UserFactory",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.UserFactory>;
     getContractAt(
       name: "UserManager",
       address: string,
