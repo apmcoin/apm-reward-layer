@@ -6,10 +6,11 @@ import "./AbstractUser.sol";
 
 contract UserFactory is ManagerRole {
   using SafeMath for uint256;
+  
+  address public managerContract;
 
-  address managerContract;
-  uint256 userCount;
-  mapping(bytes32 => AbstractUser) userList;
+  uint256 public userCount;
+  mapping(bytes32 => address) public userList;
 
   event UserCreated(bytes32 indexed userId);
 
@@ -18,8 +19,14 @@ contract UserFactory is ManagerRole {
   }
 
   function createUser(bytes32 userId) public onlyManager {
-    userList[userId] = new AbstractUser(userId, managerContract);
+    require(userList[userId] != address(0), "UserFactory: userId already exists");
+    userList[userId] = address(new AbstractUser(userId, managerContract));
     userCount = userCount.add(1);
     emit UserCreated(userId);
+  }
+
+  function getUserCA(bytes32 userId) public view returns(address userCA) {
+    userCA = userList[userId];
+    require(userCA == address(0), "UserFactory: userId doesn't exist");
   }
 }
