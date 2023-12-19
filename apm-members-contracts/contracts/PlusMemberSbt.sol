@@ -35,6 +35,10 @@ contract PlusMemberSBT is ERC721, ManagerRole {
         return newTokenId;
     }
 
+    function burn(address owner, uint256 tokenId) public onlyManager {
+      _burn(owner, tokenId);
+    }
+
     function currentTokenId() public view returns (uint256) {
         return _tokenIds;
     }
