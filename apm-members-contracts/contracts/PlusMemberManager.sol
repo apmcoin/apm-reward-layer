@@ -22,7 +22,7 @@ contract PlusMemberManager is ManagerRole {
     }
 
     function addPlusMember(bytes32 userId) public onlyManager returns(uint256 tokenId) {
-        require(plusMembers[userId] != 0, "Member already exists");
+        require(plusMembers[userId] == 0, "Member already exists");
         tokenId = plusMemberSbt.mintNext(userFactory.getUserCA(userId));
         plusMembers[userId] = tokenId;
         plusMemberCount = plusMemberCount.add(1);
@@ -31,7 +31,7 @@ contract PlusMemberManager is ManagerRole {
     }
 
     function removePlusMember(bytes32 userId) public onlyManager {
-        require(plusMembers[userId] == 0, "Member does not exist");
+        require(plusMembers[userId] != 0, "Member does not exist");
         plusMemberSbt.burn(userFactory.getUserCA(userId), plusMembers[userId]);
         delete plusMembers[userId];
         plusMemberCount = plusMemberCount.sub(1);

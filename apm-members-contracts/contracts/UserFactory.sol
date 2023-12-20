@@ -13,7 +13,7 @@ contract UserFactory is ManagerRole {
   event UserCreated(bytes32 indexed userId, address userCA);
 
   function createUser(bytes32 userId) public onlyManager {
-    require(users[userId] != address(0), "UserFactory: userId already exists");
+    require(users[userId] == address(0), "UserFactory: userId already exists");
 
     // userCA 생성
     address userCA = address(new AbstractUser(userId));
@@ -25,6 +25,6 @@ contract UserFactory is ManagerRole {
 
   function getUserCA(bytes32 userId) public view returns(address userCA) {
     userCA = users[userId];
-    require(userCA == address(0), "UserFactory: userId does not exist");
+    require(userCA != address(0), "UserFactory: userId does not exist");
   }
 }
