@@ -13,6 +13,14 @@ import * as Contracts from ".";
 declare module "hardhat/types/runtime" {
   interface HardhatEthersHelpers extends HardhatEthersHelpersBase {
     getContractFactory(
+      name: "AbstractUser",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.AbstractUser__factory>;
+    getContractFactory(
+      name: "ApmMembersPlusSBT",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ApmMembersPlusSBT__factory>;
+    getContractFactory(
       name: "BusRideManager",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.BusRideManager__factory>;
@@ -536,7 +544,21 @@ declare module "hardhat/types/runtime" {
       name: "ReentrancyGuard",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ReentrancyGuard__factory>;
+    getContractFactory(
+      name: "UserFactory",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.UserFactory__factory>;
 
+    getContractAt(
+      name: "AbstractUser",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.AbstractUser>;
+    getContractAt(
+      name: "ApmMembersPlusSBT",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ApmMembersPlusSBT>;
     getContractAt(
       name: "BusRideManager",
       address: string,
@@ -1192,6 +1214,11 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.ReentrancyGuard>;
+    getContractAt(
+      name: "UserFactory",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.UserFactory>;
 
     // default types
     getContractFactory(
