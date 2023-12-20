@@ -10,17 +10,8 @@ contract PlusMemberSBT is ERC721, ManagerRole {
 
     constructor() public ERC721() {}
 
-    function mintMultiple(address[] memory to, uint256[] memory tokenIds) public onlyManager {
-        require(to.length == tokenIds.length, "PlusMembersSBT: to and tokenIds length mismatch");
-        for (uint256 i = 0; i < to.length; i++) {
-            _mint(to[i], tokenIds[i]);
-        }
-    }
-
-    function burnMultiple(uint256[] memory tokenIds) public onlyManager {
-        for (uint256 i = 0; i < tokenIds.length; i++) {
-            _burn(tokenIds[i]);
-        }
+    function currentTokenId() public view returns (uint256) {
+        return tokenCount;
     }
 
     function mintNext(address to) public onlyManager returns (uint256) {
@@ -34,7 +25,16 @@ contract PlusMemberSBT is ERC721, ManagerRole {
       _burn(owner, tokenId);
     }
 
-    function currentTokenId() public view returns (uint256) {
-        return tokenCount;
+    function mintMultiple(address[] memory to, uint256[] memory tokenIds) public onlyManager {
+        require(to.length == tokenIds.length, "PlusMembersSBT: to and tokenIds length mismatch");
+        for (uint256 i = 0; i < to.length; i++) {
+            _mint(to[i], tokenIds[i]);
+        }
+    }
+
+    function burnMultiple(uint256[] memory tokenIds) public onlyManager {
+        for (uint256 i = 0; i < tokenIds.length; i++) {
+            _burn(tokenIds[i]);
+        }
     }
 }
