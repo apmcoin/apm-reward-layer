@@ -52,16 +52,15 @@ contract PlusMemberSBT is ERC721, ManagerRole {
       emit PlusMemberRemoved(owner);
     }
 
-    function mintMultiple(address[] memory to, uint256[] memory _tokenIds) public onlyManager {
-      require(to.length == _tokenIds.length, "PlusMembersSBT: to and tokenIds length mismatch");
-      for (uint256 i = 0; i < to.length; i++) {
-          _mint(to[i], _tokenIds[i]);
+    function mintMultiple(address[] memory userCAs) public onlyManager {
+      for (uint256 i = 0; i < userCAs.length; i++) {
+        mintNext(userCAs[i]);
       }
     }
 
-    function burnMultiple(uint256[] memory _tokenIds) public onlyManager {
-      for (uint256 i = 0; i < _tokenIds.length; i++) {
-          _burn(_tokenIds[i]);
+    function burnMultiple(address[] memory userCAs) public onlyManager {
+      for (uint256 i = 0; i < userCAs.length; i++) {
+        burn(userCAs[i]);
       }
     }
 }
