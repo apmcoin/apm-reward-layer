@@ -23,8 +23,7 @@ contract UserFactory is ManagerRole {
     emit UserCreated(userId, userCA);
   }
 
-  function getUserCA(bytes32 userId) public view returns(address userCA) {
-    userCA = users[userId];
-    require(userCA != address(0), "UserFactory: userId does not exist");
+  function getUserCA(bytes32 userId) public view returns(address) {
+    return users[userId];
   }
 }
