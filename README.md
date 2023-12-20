@@ -1,4 +1,4 @@
-# rAPM - apM Reward Layer
+# RAPM - apM Reward Layer
 Off-chain reward bridging mainnet designed for real world business
 
 - OpenEthereum based POA Mainnet (Can enable on-chain consensus on a contract base)
