@@ -26,6 +26,5 @@ contract AbstractUser is ManagerRole {
 
   function destroy() public onlyManager {
     isActive = false;
-
   }
 }

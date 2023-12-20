@@ -11,6 +11,7 @@ contract UserFactory is ManagerRole {
   uint256 private userCount;
 
   event UserCreated(bytes32 indexed userId, address userCA);
+  event UserRemoved(bytes32 indexed userId);
 
   function createUser(bytes32 userId) public onlyManager {
     require(users[userId] == address(0), "UserFactory: userId already exists");
@@ -25,5 +26,16 @@ contract UserFactory is ManagerRole {
 
   function getUserCA(bytes32 userId) public view returns(address) {
     return users[userId];
+  }
+
+  function removeUser(bytes32 userId) public onlyManager {
+    require(users[userId] != address(0), "UserFactory: userId does not exists");
+
+    // userCA 비활성화 처리
+    AbstractUser(users[userId]).destroy();
+    delete users[userId];
+    userCount = userCount.sub(1);
+
+    emit UserRemoved(userId);
   }
 }
