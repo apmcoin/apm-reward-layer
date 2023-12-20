@@ -8,11 +8,6 @@ contract PlusMemberSBT is ERC721, ManagerRole {
 
     uint256 private _tokenIds; // 토큰 ID 카운터
 
-    // modifier onlySBTManager() {
-    //     require(msg.sender == owner(), "ApMMembersPlusSBT: caller is not the SBT manager");
-    //     _;
-    // }
-
     constructor() public ERC721() {}
 
     function mintMultiple(address[] memory to, uint256[] memory tokenIds) public onlyManager {

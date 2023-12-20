@@ -21,9 +21,9 @@ contract PlusMemberManager is ManagerRole {
       userFactory = UserFactory(_userFactory);
     }
 
-    function addPlusMember(bytes32 userId) public onlyManager {
+    function addPlusMember(bytes32 userId) public onlyManager returns(uint256 tokenId) {
         require(plusMembers[userId] != 0, "Member already exists");
-        uint256 tokenId = plusMemberSbt.mintNext(userFactory.getUserCA(userId));
+        tokenId = plusMemberSbt.mintNext(userFactory.getUserCA(userId));
         plusMembers[userId] = tokenId;
         plusMemberCount = plusMemberCount.add(1);
 
