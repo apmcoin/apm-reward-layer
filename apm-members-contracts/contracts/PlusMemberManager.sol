@@ -10,7 +10,7 @@ contract PlusMemberManager is ManagerRole {
     PlusMemberSBT plusMemberSbt;
     UserFactory userFactory;
 
-    mapping(bytes32 => uint256) private plusMembers;
+    mapping(bytes32 => uint256) private sbtTokenIds;
     uint256 private plusMemberCount;
 
     event PlusMemberAdded(bytes32 userId);
@@ -22,18 +22,20 @@ contract PlusMemberManager is ManagerRole {
     }
 
     function addPlusMember(bytes32 userId) public onlyManager returns(uint256 tokenId) {
-        require(plusMembers[userId] == 0, "Member already exists");
+        require(sbtTokenIds[userId] == 0, "Member already exists");
+
         tokenId = plusMemberSbt.mintNext(userFactory.getUserCA(userId));
-        plusMembers[userId] = tokenId;
+        sbtTokenIds[userId] = tokenId;
         plusMemberCount = plusMemberCount.add(1);
 
         emit PlusMemberAdded(userId);
     }
 
     function removePlusMember(bytes32 userId) public onlyManager {
-        require(plusMembers[userId] != 0, "Member does not exist");
-        plusMemberSbt.burn(userFactory.getUserCA(userId), plusMembers[userId]);
-        delete plusMembers[userId];
+        require(sbtTokenIds[userId] != 0, "Member does not exist");
+
+        plusMemberSbt.burn(userFactory.getUserCA(userId), sbtTokenIds[userId]);
+        delete sbtTokenIds[userId];
         plusMemberCount = plusMemberCount.sub(1);
 
         emit PlusMemberRemoved(userId);
@@ -44,6 +46,6 @@ contract PlusMemberManager is ManagerRole {
     }
 
     function isPlusMember(bytes32 userId) public view returns (bool) {
-        return plusMembers[userId] != 0 ? true : false;
+        return sbtTokenIds[userId] != 0 ? true : false;
     }
 }
