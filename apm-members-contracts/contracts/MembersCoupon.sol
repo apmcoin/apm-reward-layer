@@ -6,18 +6,24 @@ import "./ManagerRole.sol";
 contract MembersCoupon is ERC721, ManagerRole {
   using SafeMath for uint256;
 
-  uint256 private tokenCount; // 토큰 ID 카운터
+  uint256 private currentTokenId;
+
+  event MembersCouponIssued(address userCA);
+  event MembersCouponCollected(address userCA);
 
   constructor() public ERC721() {}
 
-  function mintNext(address to) public onlyManager returns(uint256) {
-    uint256 newTokenId = tokenCount.add(1);
-    tokenCount = newTokenId;
-    _mint(to, newTokenId);
-    return newTokenId;
+  function mintNext(address userCA) public onlyManager returns(uint256 newTokenId) {
+    newTokenId = currentTokenId.add(1);
+    currentTokenId = newTokenId;
+    _mint(userCA, newTokenId);
+
+    emit MembersCouponIssued(userCA);
   }
 
-  function burn(address to, uint256 tokenId) public onlyManager {
-    _burn(to, tokenId);
+  function burn(address userCA, uint256 tokenId) public onlyManager {
+    _burn(userCA, tokenId);
+
+    emit MembersCouponCollected(userCA);
   }
 }
