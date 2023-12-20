@@ -31,25 +31,25 @@ contract PlusMemberSBT is ERC721, ManagerRole {
       return tokenIds[userCA];
     }
 
-    function mintNext(address to) public onlyManager returns (uint256 newTokenId) {
-      require(tokenIds[to] == 0, "PlusMemberSBT: Member already exists");
+    function mintNext(address userCa) public onlyManager returns (uint256 newTokenId) {
+      require(tokenIds[userCa] == 0, "PlusMemberSBT: Member already exists");
 
       newTokenId = currentTokenId.add(1);
       currentTokenId = newTokenId;
-      _mint(to, newTokenId);
+      _mint(userCa, newTokenId);
       plusMemberCount = plusMemberCount.add(1);
 
-      emit PlusMemberAdded(to);
+      emit PlusMemberAdded(userCa);
     }
 
-    function burn(address owner) public onlyManager {
-      require(tokenIds[owner] != 0, "PlusMemberSBT: Member does not exist");
+    function burn(address userCA) public onlyManager {
+      require(tokenIds[userCA] != 0, "PlusMemberSBT: Member does not exist");
 
-      _burn(owner, tokenIds[owner]);
-      delete tokenIds[owner];
+      _burn(userCA, tokenIds[userCA]);
+      delete tokenIds[userCA];
       plusMemberCount = plusMemberCount.sub(1);
     
-      emit PlusMemberRemoved(owner);
+      emit PlusMemberRemoved(userCA);
     }
 
     function mintMultiple(address[] memory userCAs) public onlyManager {
