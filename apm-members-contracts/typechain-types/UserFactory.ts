@@ -21,6 +21,7 @@ export interface UserFactoryInterface extends utils.Interface {
     "addManager(address)": FunctionFragment;
     "getUserCA(bytes32)": FunctionFragment;
     "removeUser(bytes32)": FunctionFragment;
+    "hasUserCA(bytes32)": FunctionFragment;
     "createUser(bytes32)": FunctionFragment;
     "removeManager(address)": FunctionFragment;
     "isManager(address)": FunctionFragment;
@@ -36,6 +37,10 @@ export interface UserFactoryInterface extends utils.Interface {
     values: [BytesLike]
   ): string;
   encodeFunctionData(
+    functionFragment: "hasUserCA",
+    values: [BytesLike]
+  ): string;
+  encodeFunctionData(
     functionFragment: "createUser",
     values: [BytesLike]
   ): string;
@@ -48,6 +53,7 @@ export interface UserFactoryInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "addManager", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "getUserCA", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "removeUser", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "hasUserCA", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "createUser", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "removeManager",
@@ -126,6 +132,8 @@ export interface UserFactory extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    hasUserCA(userId: BytesLike, overrides?: CallOverrides): Promise<[boolean]>;
+
     createUser(
       userId: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -151,6 +159,8 @@ export interface UserFactory extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  hasUserCA(userId: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+
   createUser(
     userId: BytesLike,
     overrides?: Overrides & { from?: string | Promise<string> }
@@ -169,6 +179,8 @@ export interface UserFactory extends BaseContract {
     getUserCA(userId: BytesLike, overrides?: CallOverrides): Promise<string>;
 
     removeUser(userId: BytesLike, overrides?: CallOverrides): Promise<void>;
+
+    hasUserCA(userId: BytesLike, overrides?: CallOverrides): Promise<boolean>;
 
     createUser(userId: BytesLike, overrides?: CallOverrides): Promise<void>;
 
@@ -212,6 +224,8 @@ export interface UserFactory extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    hasUserCA(userId: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+
     createUser(
       userId: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -239,6 +253,11 @@ export interface UserFactory extends BaseContract {
     removeUser(
       userId: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    hasUserCA(
+      userId: BytesLike,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     createUser(
