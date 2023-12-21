@@ -7,7 +7,7 @@ const wallet = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
 // nonce 값을 초기화하는 별도의 비동기 함수
 async function initializeNonce() {
     //마지막 pending tx의 nonce를 가져온다.
-    //퍼블릭 네트워크에선 latest가 더 적합하지만, RAPM처럼 확인된 참여자만 존재하는 경우 pending이 적합하다.
+    //퍼블릭 네트워크에선 latest가 더 적합하지만, RAPM처럼 확인된 참여자만 존재하는 경우 pending이 적합...할 수 있지만 가능하면 latest쓸 것. 아래 pending은 네트워크 테스트용.
     return await provider.getTransactionCount(wallet.address, 'pending'); 
 }
 
@@ -32,7 +32,7 @@ const sendRAPM = async (nonce) => {
     } catch (error) {
         console.error(`Error: ${error.message}`);
         if (error.message.includes('ETIMEDOUT')) {
-            setTimeout(sendEth, 3000); // 3초 후 재시도
+            setTimeout(sendRAPM, 3000); // 3초 후 재시도
         }
         
         return nonce + 1; // 실패한 트랜잭션의 경우에도 nonce 증가
