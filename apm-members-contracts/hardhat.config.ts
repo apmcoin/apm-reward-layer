@@ -25,11 +25,12 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
 const config: HardhatUserConfig = {
   solidity: "0.5.6",
   networks: {
-    ropsten: {
-      url: process.env.ROPSTEN_URL || "",
-      accounts:
-        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
-    },
+    mainnet: {
+      url: process.env.RAPM_RPC_URL,
+      chainId: +(process.env.RAPM_CHAIN_ID as string),
+      accounts: [process.env.PRIVATE_KEY as string],
+      gasPrice: 2_000_000_000,
+    }
   },
   gasReporter: {
     enabled: process.env.REPORT_GAS !== undefined,
