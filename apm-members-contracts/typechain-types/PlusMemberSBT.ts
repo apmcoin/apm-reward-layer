@@ -246,7 +246,7 @@ export interface PlusMemberSBT extends BaseContract {
 
   functions: {
     mintNext(
-      userCa: string,
+      userCA: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -344,7 +344,7 @@ export interface PlusMemberSBT extends BaseContract {
   };
 
   mintNext(
-    userCa: string,
+    userCA: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -438,7 +438,7 @@ export interface PlusMemberSBT extends BaseContract {
   isManager(account: string, overrides?: CallOverrides): Promise<boolean>;
 
   callStatic: {
-    mintNext(userCa: string, overrides?: CallOverrides): Promise<BigNumber>;
+    mintNext(userCA: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     supportsInterface(
       interfaceId: BytesLike,
@@ -566,7 +566,7 @@ export interface PlusMemberSBT extends BaseContract {
 
   estimateGas: {
     mintNext(
-      userCa: string,
+      userCA: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -665,7 +665,7 @@ export interface PlusMemberSBT extends BaseContract {
 
   populateTransaction: {
     mintNext(
-      userCa: string,
+      userCA: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 

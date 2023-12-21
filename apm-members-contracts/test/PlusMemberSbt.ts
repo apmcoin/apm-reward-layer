@@ -1,28 +1,42 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { PlusMemberAddedEventFilter } from '../typechain-types/PlusMemberManager';
-import { ApmMembersPlusSBT } from '../typechain-types/ApMMembersPlusSBT';
+import { PlusMemberSBT } from '../typechain-types/PlusMemberSBT';
 
 describe('PlusMemberManager', () => {
-  let PlusMemberManagerFactory: any;
   let SBTFactory: any;
 
-  let user: any;
-  let apmMembersPlusSbt: ApmMembersPlusSBT
+  let sbtDeployer: any;
+  let plusMemberSBT: PlusMemberSBT;
+  let userCA: string;
   
   before(async () => {
-    // factory, buyer, seller 초기화
-    [[user], PlusMemberManagerFactory, SBTFactory] = await Promise.all([
-      ethers.getSigners(), 
-      ethers.getContractFactory("PlusMemberManager"), 
-      ethers.getContractFactory("ApmMembersPlusSBT")
-    ]);
+    sbtDeployer = await ethers.getSigners(), 
+    SBTFactory = await ethers.getContractFactory("PlusMemberSBT", sbtDeployer );
   })
 
   beforeEach(async () => {
-    apmMembersPlusSbt = await SBTFactory.deploy();
+    plusMemberSBT = await SBTFactory.deploy();
+    userCA = '0xDF4F39a8037174209c34DC17Eef1A4c505b11E2A';
   });
 
-  it('통과한다', async () => {
+  it('throws error if sender is not a manager', async () => {
+    try {
+      await plusMemberSBT.mintNext(userCA);
+    } catch (e: any) {
+      expect(e.message).contain('caller does not have the Manager role');
+    }
+  })
+
+  it.skip('throws error if userCA has already tokenId', async () => {
+    await plusMemberSBT.addManager(sbtDeployer);
+    const userCA = '0xDF4F39a8037174209c34DC17Eef1A4c505b11E2A';
+    await plusMemberSBT.mintNext(userCA);
+
+    try {
+      await plusMemberSBT.mintNext(userCA);
+    } catch (e) {
+      console.log(e)
+      expect(e).contain('Member already exists');
+    }
   });
 })
