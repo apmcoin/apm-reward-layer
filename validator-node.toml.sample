@@ -26,7 +26,5 @@ bootnodes = [
 # engine_signer = ""
 # Prepare a block to seal even when there are no miners connected.
 force_sealing = true
-
-[footprint]
 # Minimum RAPM Gas Price
-minGasPrice = 20000000000 # This sets the minimum gas price to 20 Gwei.
+min_gas_price = 20000000000 # This sets the minimum gas price to 20 Gwei.
