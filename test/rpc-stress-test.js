@@ -29,7 +29,7 @@ const sendEth = async (nonce) => {
         const signedTx = await web3.eth.accounts.signTransaction(tx, senderPrivateKey);
         const receipt = await web3.eth.sendSignedTransaction(signedTx.rawTransaction);
 
-        console.log(`Success: ${receipt.status}, TxID: ${receipt.transactionHash}, Amount: ${web3.utils.fromWei(amount, 'ether')} ETH, To: ${toAddress}`);
+        console.log(`Success: ${receipt.status}, TxID: ${receipt.transactionHash}, Amount: ${web3.utils.fromWei(amount, 'ether')} RAPM, To: ${toAddress}`);
 
     } catch (error) {
         console.error(`Error: ${error.message}`);
