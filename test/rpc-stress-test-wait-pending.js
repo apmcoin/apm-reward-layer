@@ -16,7 +16,7 @@ const sendRAPM = async (nonce) => {
         const toAddress = ethers.hexlify(ethers.randomBytes(20));
         const amount = ethers.parseUnits(`${(Math.random() * 0.09 + 0.01).toFixed(2)}`, 'ether');
 
-        const transaction  = await wallet.sendTransaction({
+        const transaction = await wallet.sendTransaction({
             to: toAddress,
             value: amount,
             gasLimit: ethers.getBigInt(42000),
@@ -24,9 +24,8 @@ const sendRAPM = async (nonce) => {
             nonce, // Ethers 의 Wallet객체는 Nonce를 자체 관리하여 Web3js보단 Nonce예외가 적지만, 극단적인 tx 호출에선 여전히-혹은 오히려 더 별도의 Nonce 관리가 필요하다.
           });
 
-
-        const receipt = await transaction.wait(); //1컨펌까지 기다리기. 
-        console.log(`Success: ${receipt.status}, TxID: ${receipt.transactionHash}, Amount: ${ethers.formatUnits(amount, 'ether')} RAPM, To: ${toAddress}`);
+        // 트랜잭션 해시가 있다면 전송은 성공한 것. (아직 0컨펌)
+        console.log(`Transaction sent: Hash ${transaction.hash}, Nonce ${nonce}, Amount: ${ethers.formatUnits(amount, 'ether')} RAPM, To: ${toAddress}`);
 
         //성공 시 논스 증가시킨다
         return nonce + 1;
@@ -48,7 +47,8 @@ const sendRAPM = async (nonce) => {
     const sendTransaction = async () => {
         //재귀 호출을 하며 마지막 nonce를 받아서 사용한다.
         nonce = await sendRAPM(nonce);
-        setTimeout(sendTransaction, 100); 
+        //컨펌 완료를 기다리지 않으므로 시간 증가
+        setTimeout(sendTransaction, 500); 
     };
     sendTransaction();
 })();
