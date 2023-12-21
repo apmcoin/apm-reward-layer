@@ -16,3 +16,7 @@ bootnodes = [
     "enode://c7d792ad89266c0d1538ed868c653dcde13af0059d426b7162587e19c1f38d8ab0ad3f7aeb456595248b4fa0843fbbb2a2917e6943eaf2dd3c0b89f8f583ea40@34.64.113.164:30303",
     "enode://fac76aa585aea446ded8de8c54f2966fb1d52f547449071c9fe41f577c6c82df03807c94154f88578bc804a7a53f42170623fe43f7dca6d67ec10e4865a02251@34.22.105.69:30303"
 ]
+
+[mining]
+# Minimum RAPM Gas Price
+min_gas_price = 20000000000 # This sets the minimum gas price to 20 Gwei.
