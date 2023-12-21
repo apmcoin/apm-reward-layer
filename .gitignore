@@ -16,3 +16,5 @@ Cargo.lock
 validator-node.toml
 
 logs/
+node_modules/
+.env
