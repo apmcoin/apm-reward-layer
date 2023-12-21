@@ -3,7 +3,7 @@ pragma solidity ^0.5.6;
 import "./rapm-contracts/token/ERC721/ERC721.sol";
 import "./ManagerRole.sol";
 
-contract PlusMemberSBT is ERC721, ManagerRole {
+contract PlusMemberSbt is ERC721, ManagerRole {
     using SafeMath for uint256;
 
     uint256 private currentTokenId; // 토큰 ID 카운터
@@ -32,7 +32,7 @@ contract PlusMemberSBT is ERC721, ManagerRole {
     }
 
     function mintNext(address userCA) public onlyManager returns (uint256 newTokenId) {
-      require(tokenIds[userCA] == 0, "PlusMemberSBT: Member already exists");
+      require(tokenIds[userCA] == 0, "PlusMemberSbt: Member already exists");
 
       newTokenId = currentTokenId.add(1);
       _mint(userCA, newTokenId);
@@ -45,10 +45,10 @@ contract PlusMemberSBT is ERC721, ManagerRole {
     }
 
     function burn(address userCA) public onlyManager {
-      require(tokenIds[userCA] != 0, "PlusMemberSBT: Member does not exist");
+      require(tokenIds[userCA] != 0, "PlusMemberSbt: Member does not exist");
 
       _burn(userCA, tokenIds[userCA]);
-      
+
       delete tokenIds[userCA];
       plusMemberCount = plusMemberCount.sub(1);
     
