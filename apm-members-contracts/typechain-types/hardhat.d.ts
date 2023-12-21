@@ -33,9 +33,9 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.MembersPoint__factory>;
     getContractFactory(
-      name: "PlusMemberSBT",
+      name: "PlusMemberSbt",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.PlusMemberSBT__factory>;
+    ): Promise<Contracts.PlusMemberSbt__factory>;
     getContractFactory(
       name: "CapperRole",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -579,10 +579,10 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.MembersPoint>;
     getContractAt(
-      name: "PlusMemberSBT",
+      name: "PlusMemberSbt",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.PlusMemberSBT>;
+    ): Promise<Contracts.PlusMemberSbt>;
     getContractAt(
       name: "CapperRole",
       address: string,

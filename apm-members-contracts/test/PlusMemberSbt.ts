@@ -1,49 +1,49 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { PlusMemberSBT } from '../typechain-types/PlusMemberSBT';
+import { PlusMemberSbt } from '../typechain-types/PlusMemberSbt';
 
 describe('PlusMemberManager', () => {
-  let SBTFactory: any;
+  let SbtFactory: any;
 
   let sbtDeployer: any;
   let signer: any;
-  let plusMemberSBT: PlusMemberSBT;
+  let plusMemberSbt: PlusMemberSbt;
   let userCA: any;
   
   before(async () => {
     [sbtDeployer, signer] = await ethers.getSigners(), 
-    SBTFactory = await ethers.getContractFactory("PlusMemberSBT", sbtDeployer.getAddress());
+    SbtFactory = await ethers.getContractFactory("PlusMemberSbt", sbtDeployer.getAddress());
   })
 
   beforeEach(async () => {
-    plusMemberSBT = await SBTFactory.deploy();
+    plusMemberSbt = await SbtFactory.deploy();
     userCA = signer.getAddress();
   });
 
   it('throws error if sender is not a manager', async () => {
-    try {
-      await plusMemberSBT.removeManager(sbtDeployer.getAddress());
+    await plusMemberSbt.removeManager(sbtDeployer.getAddress());
 
-      await plusMemberSBT.mintNext(userCA);
+    try {
+      await plusMemberSbt.mintNext(userCA);
     } catch (e: any) {
       expect(e.message).contain('caller does not have the Manager role');
     }
   })
 
   it('throws error if userCA has already tokenId', async () => {
-    await plusMemberSBT.mintNext(userCA);
+    await plusMemberSbt.mintNext(userCA);
 
     try {
-      await plusMemberSBT.mintNext(userCA);
+      await plusMemberSbt.mintNext(userCA);
     } catch (e: any) {
       expect(e.message).contain('Member already exists');
     }
   });
 
   it('passes', async () => {
-    const tx = await plusMemberSBT.mintNext(userCA);
+    const tx = await plusMemberSbt.mintNext(userCA);
     await tx.wait();
 
-    expect((await plusMemberSBT.isPlusMember(userCA))).eq(true);
+    expect((await plusMemberSbt.isPlusMember(userCA))).eq(true);
   })
 })
