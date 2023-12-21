@@ -1,7 +1,7 @@
 pragma solidity 0.5.6;
 
 import "./rapm-contracts/token/ERC20/IERC20.sol";
-import "./rapm-contracts/access/roles/OwnableRole.sol";
+import "./rapm-contracts/ownership/Ownable.sol";
 
 contract NativeBridgeFromEthereum is OwnableRole {
     IERC20 private APM = IERC20(0xC8C424B91D8ce0137bAB4B832B7F7D154156BA6c);

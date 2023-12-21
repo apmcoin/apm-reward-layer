@@ -1,8 +1,8 @@
 pragma solidity 0.5.6;
 
-import "./rapm-contracts/access/roles/OwnableRole.sol";
+import "./rapm-contracts/ownership/Ownable.sol";
 
-contract NativeBridgeFromRAPM is OwnableRole {
+contract NativeBridgeFromRAPM is Ownable {
 
     // Events for logging
     event RAPMReceived(address indexed sender, uint256 amount);
