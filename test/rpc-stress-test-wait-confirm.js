@@ -16,7 +16,7 @@ const sendRAPM = async (nonce) => {
         const toAddress = ethers.hexlify(ethers.randomBytes(20));
         const amount = ethers.parseUnits(`${(Math.random() * 0.09 + 0.01).toFixed(2)}`, 'ether');
 
-        const transaction = await wallet.sendTransaction({
+        const transaction  = await wallet.sendTransaction({
             to: toAddress,
             value: amount,
             gasLimit: ethers.getBigInt(42000),
@@ -26,7 +26,6 @@ const sendRAPM = async (nonce) => {
 
         //TX가 블록에 포함되고 컨펌되기까지 기다린다.
         const receipt = await transaction.wait();
-
         console.log(`Success: ${receipt.status}, TxID: ${receipt.transactionHash}, Amount: ${ethers.formatUnits(amount, 'ether')} RAPM, To: ${toAddress}`);
 
         //성공 시 논스 증가시킨다
