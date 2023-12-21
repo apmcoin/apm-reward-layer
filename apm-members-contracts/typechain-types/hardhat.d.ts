@@ -17,10 +17,6 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.AbstractUser__factory>;
     getContractFactory(
-      name: "ApmMembersPlusSBT",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.ApmMembersPlusSBT__factory>;
-    getContractFactory(
       name: "BusRideManager",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.BusRideManager__factory>;
@@ -29,9 +25,17 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ManagerRole__factory>;
     getContractFactory(
-      name: "PlusMemberManager",
+      name: "MembersCoupon",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.PlusMemberManager__factory>;
+    ): Promise<Contracts.MembersCoupon__factory>;
+    getContractFactory(
+      name: "MembersPoint",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.MembersPoint__factory>;
+    getContractFactory(
+      name: "PlusMemberSbt",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.PlusMemberSbt__factory>;
     getContractFactory(
       name: "CapperRole",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -555,11 +559,6 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.AbstractUser>;
     getContractAt(
-      name: "ApmMembersPlusSBT",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.ApmMembersPlusSBT>;
-    getContractAt(
       name: "BusRideManager",
       address: string,
       signer?: ethers.Signer
@@ -570,10 +569,20 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.ManagerRole>;
     getContractAt(
-      name: "PlusMemberManager",
+      name: "MembersCoupon",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.PlusMemberManager>;
+    ): Promise<Contracts.MembersCoupon>;
+    getContractAt(
+      name: "MembersPoint",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.MembersPoint>;
+    getContractAt(
+      name: "PlusMemberSbt",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.PlusMemberSbt>;
     getContractAt(
       name: "CapperRole",
       address: string,

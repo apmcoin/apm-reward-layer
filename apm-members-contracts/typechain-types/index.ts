@@ -2,10 +2,11 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { AbstractUser } from "./AbstractUser";
-export type { ApmMembersPlusSBT } from "./ApmMembersPlusSBT";
 export type { BusRideManager } from "./BusRideManager";
 export type { ManagerRole } from "./ManagerRole";
-export type { PlusMemberManager } from "./PlusMemberManager";
+export type { MembersCoupon } from "./MembersCoupon";
+export type { MembersPoint } from "./MembersPoint";
+export type { PlusMemberSbt } from "./PlusMemberSbt";
 export type { CapperRole } from "./CapperRole";
 export type { MinterRole } from "./MinterRole";
 export type { PauserRole } from "./PauserRole";
@@ -137,10 +138,11 @@ export type { ReentrancyGuard } from "./ReentrancyGuard";
 export type { UserFactory } from "./UserFactory";
 
 export { AbstractUser__factory } from "./factories/AbstractUser__factory";
-export { ApmMembersPlusSBT__factory } from "./factories/ApmMembersPlusSBT__factory";
 export { BusRideManager__factory } from "./factories/BusRideManager__factory";
 export { ManagerRole__factory } from "./factories/ManagerRole__factory";
-export { PlusMemberManager__factory } from "./factories/PlusMemberManager__factory";
+export { MembersCoupon__factory } from "./factories/MembersCoupon__factory";
+export { MembersPoint__factory } from "./factories/MembersPoint__factory";
+export { PlusMemberSbt__factory } from "./factories/PlusMemberSbt__factory";
 export { CapperRole__factory } from "./factories/CapperRole__factory";
 export { MinterRole__factory } from "./factories/MinterRole__factory";
 export { PauserRole__factory } from "./factories/PauserRole__factory";

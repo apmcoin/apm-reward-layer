@@ -3,14 +3,14 @@ pragma solidity ^0.5.6;
 import "./rapm-contracts/token/ERC721/ERC721.sol";
 import "./ManagerRole.sol";
 
-contract PlusMemberSBT is ERC721, ManagerRole {
+contract PlusMemberSbt is ERC721, ManagerRole {
     using SafeMath for uint256;
 
     uint256 private currentTokenId; // 토큰 ID 카운터
     uint256 private plusMemberCount;
     mapping(address => uint256) private tokenIds;
 
-    event PlusMemberAdded(address userCA);
+    event PlusMemberAdded(address indexed userCA, uint256 tokenId);
     event PlusMemberRemoved(address userCA);
 
     constructor() public ERC721() {}
@@ -20,7 +20,7 @@ contract PlusMemberSBT is ERC721, ManagerRole {
     }
 
     function getPlusMemberCount() public view returns (uint256) {
-        return plusMemberCount;
+      return plusMemberCount;
     }
 
     function isPlusMember(address userCA) public view returns (bool) {
@@ -31,21 +31,24 @@ contract PlusMemberSBT is ERC721, ManagerRole {
       return tokenIds[userCA];
     }
 
-    function mintNext(address userCa) public onlyManager returns (uint256 newTokenId) {
-      require(tokenIds[userCa] == 0, "PlusMemberSBT: Member already exists");
+    function mintNext(address userCA) public onlyManager returns (uint256 newTokenId) {
+      require(tokenIds[userCA] == 0, "PlusMemberSbt: Member already exists");
 
       newTokenId = currentTokenId.add(1);
-      currentTokenId = newTokenId;
-      _mint(userCa, newTokenId);
-      plusMemberCount = plusMemberCount.add(1);
+      _mint(userCA, newTokenId);
 
-      emit PlusMemberAdded(userCa);
+      tokenIds[userCA] = newTokenId;
+      currentTokenId = newTokenId;
+      plusMemberCount = plusMemberCount.add(1);
+ 
+      emit PlusMemberAdded(userCA, newTokenId);
     }
 
     function burn(address userCA) public onlyManager {
-      require(tokenIds[userCA] != 0, "PlusMemberSBT: Member does not exist");
+      require(tokenIds[userCA] != 0, "PlusMemberSbt: Member does not exist");
 
       _burn(userCA, tokenIds[userCA]);
+
       delete tokenIds[userCA];
       plusMemberCount = plusMemberCount.sub(1);
     
