@@ -57,6 +57,9 @@ openethereum --config node.toml
 git clone https://github.com/apmcoin/apm-reward-layer/
 chmod u+x ~/apm-reward-layer/release/openethereum
 sudo ln -s ~/apm-reward-layer/release/openethereum /usr/local/bin/
+
+openethereum
+
 cp ~/apm-reward-layer/rapm.json ~/.local/share/openethereum/chains/rapm.json
 cp ~/apm-reward-layer/rpc-node.toml.sample ~/.local/share/openethereum/chains/node.toml
 
