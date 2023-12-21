@@ -17,7 +17,7 @@ contract ManagerRole {
 
     constructor() public {
         // 계약 생성자가 초기 매니저로 설정됨
-        addManager(msg.sender);
+        managers.add(msg.sender);
     }
 
     function addManager(address account) public onlyManager {
