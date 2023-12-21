@@ -33,7 +33,7 @@ describe('PlusMemberManager', () => {
       }
     })
 
-    it('throws error if userCA has already tokenId', async () => {
+    it('throws error if user is already plusMember', async () => {
       await plusMemberSbt.mintNext(userCA);
 
       try {
@@ -43,7 +43,7 @@ describe('PlusMemberManager', () => {
       }
     });
 
-    it('passes', async () => {
+    it('mint a token of plusMember', async () => {
       await plusMemberSbt.mintNext(userCA);
 
       expect((await plusMemberSbt.isPlusMember(userCA))).eq(true);
@@ -68,7 +68,7 @@ describe('PlusMemberManager', () => {
       }
     })
 
-    it('throws error if userCA does not have tokenId', async () => {
+    it('throws error if user is not a plusMember', async () => {
       try {
         await plusMemberSbt.burn(userCA);
       } catch (e: any) {
@@ -76,7 +76,7 @@ describe('PlusMemberManager', () => {
       }
     });
 
-    it('passes', async () => {
+    it('burns the token of plusMember', async () => {
       await plusMemberSbt.mintNext(userCA);
 
       await plusMemberSbt.burn(userCA);
