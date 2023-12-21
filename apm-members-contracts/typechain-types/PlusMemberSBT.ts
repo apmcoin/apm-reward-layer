@@ -162,7 +162,7 @@ export interface PlusMemberSBTInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "isManager", data: BytesLike): Result;
 
   events: {
-    "PlusMemberAdded(address)": EventFragment;
+    "PlusMemberAdded(address,uint256)": EventFragment;
     "PlusMemberRemoved(address)": EventFragment;
     "ManagerAdded(address)": EventFragment;
     "ManagerRemoved(address)": EventFragment;
@@ -180,7 +180,10 @@ export interface PlusMemberSBTInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: "ApprovalForAll"): EventFragment;
 }
 
-export type PlusMemberAddedEvent = TypedEvent<[string], { userCA: string }>;
+export type PlusMemberAddedEvent = TypedEvent<
+  [string, BigNumber],
+  { userCA: string; tokenId: BigNumber }
+>;
 
 export type PlusMemberAddedEventFilter = TypedEventFilter<PlusMemberAddedEvent>;
 
@@ -516,8 +519,14 @@ export interface PlusMemberSBT extends BaseContract {
   };
 
   filters: {
-    "PlusMemberAdded(address)"(userCA?: null): PlusMemberAddedEventFilter;
-    PlusMemberAdded(userCA?: null): PlusMemberAddedEventFilter;
+    "PlusMemberAdded(address,uint256)"(
+      userCA?: string | null,
+      tokenId?: null
+    ): PlusMemberAddedEventFilter;
+    PlusMemberAdded(
+      userCA?: string | null,
+      tokenId?: null
+    ): PlusMemberAddedEventFilter;
 
     "PlusMemberRemoved(address)"(userCA?: null): PlusMemberRemovedEventFilter;
     PlusMemberRemoved(userCA?: null): PlusMemberRemovedEventFilter;
