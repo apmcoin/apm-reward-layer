@@ -12,7 +12,7 @@ Since APMs are fixed assets that are no longer being issued, the RAPM used to re
 - [Building Core](./core/README.md)
 - [Validator Setup Ref](https://openethereum.github.io/Validator-Set-Tutorial-1)
 - [RAPM Chainspec](./chainspec/genesis.json)
-- [Bridge Guideline])(https://github.com/apmcoin/apm-reward-layer/tree/dev/native-asset-bridge)
+- [Bridge Guideline](https://github.com/apmcoin/apm-reward-layer/tree/dev/native-asset-bridge)
 
 
 ## Validator Setup (#for Ubuntu 20.x)
