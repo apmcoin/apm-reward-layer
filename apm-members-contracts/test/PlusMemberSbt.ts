@@ -49,4 +49,39 @@ describe('PlusMemberManager', () => {
       expect((await plusMemberSbt.isPlusMember(userCA))).eq(true);
     })
   })
+
+  describe('burn', () => {
+    before(() => {
+      userCA = signer.getAddress();
+    })
+    beforeEach(async () => {
+      plusMemberSbt = await SbtFactory.deploy();
+    });
+
+    it('throws error if sender is not a manager', async () => {
+      await plusMemberSbt.removeManager(sbtDeployer.getAddress());
+
+      try {
+        await plusMemberSbt.burn(userCA);
+      } catch (e: any) {
+        expect(e.message).contain('caller does not have the Manager role');
+      }
+    })
+
+    it('throws error if userCA does not have tokenId', async () => {
+      try {
+        await plusMemberSbt.burn(userCA);
+      } catch (e: any) {
+        expect(e.message).contain('Member does not exist');
+      }
+    });
+
+    it('passes', async () => {
+      await plusMemberSbt.mintNext(userCA);
+
+      await plusMemberSbt.burn(userCA);
+
+      expect((await plusMemberSbt.isPlusMember(userCA))).eq(false);
+    })
+  })
 })

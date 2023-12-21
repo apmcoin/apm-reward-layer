@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { UserFactory } from './../typechain-types/UserFactory';
 import { utils } from 'ethers';
+import { UserFactory } from './../typechain-types/UserFactory';
 
 describe('UserFactory', () => {
   let UserFactoryFactory: any;
