@@ -6,7 +6,7 @@ chain = "rapm.json"
 interface = "0.0.0.0"
 port = 8545
 # Only selected APIs will be exposed over this interface.
-apis = ["web3", "eth", "net", "personal", "parity", "parity_set", "traces", "rpc", parity_accounts]
+apis = ["web3", "eth", "net", "personal", "parity", "parity_set", "traces", "rpc", "parity_accounts", "pubsub"]
 
 [network]
 bootnodes = [
