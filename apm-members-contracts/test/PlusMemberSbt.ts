@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { PlusMemberAddedEventFilter } from './../typechain-types/PlusMemberManager';
+import { PlusMemberAddedEventFilter } from '../typechain-types/PlusMemberManager';
 import { ApmMembersPlusSBT } from '../typechain-types/ApMMembersPlusSBT';
 
 describe('PlusMemberManager', () => {

@@ -13,63 +13,77 @@ import {
   Signer,
   utils,
 } from "ethers";
-import { FunctionFragment, Result } from "@ethersproject/abi";
+import { FunctionFragment, Result, EventFragment } from "@ethersproject/abi";
 import { Listener, Provider } from "@ethersproject/providers";
 import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 
 export interface AbstractUserInterface extends utils.Interface {
   functions: {
-    "managerContract()": FunctionFragment;
+    "addManager(address)": FunctionFragment;
     "removeItemToInventory(uint256)": FunctionFragment;
-    "inventory(uint256)": FunctionFragment;
-    "userId()": FunctionFragment;
-    "addItemToInventory(uint256)": FunctionFragment;
+    "addItemToInventory(uint256,bytes32)": FunctionFragment;
+    "destroy()": FunctionFragment;
+    "removeManager(address)": FunctionFragment;
     "checkInventory(uint256)": FunctionFragment;
+    "isManager(address)": FunctionFragment;
   };
 
-  encodeFunctionData(
-    functionFragment: "managerContract",
-    values?: undefined
-  ): string;
+  encodeFunctionData(functionFragment: "addManager", values: [string]): string;
   encodeFunctionData(
     functionFragment: "removeItemToInventory",
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "inventory",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(functionFragment: "userId", values?: undefined): string;
-  encodeFunctionData(
     functionFragment: "addItemToInventory",
-    values: [BigNumberish]
+    values: [BigNumberish, BytesLike]
+  ): string;
+  encodeFunctionData(functionFragment: "destroy", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "removeManager",
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "checkInventory",
     values: [BigNumberish]
   ): string;
+  encodeFunctionData(functionFragment: "isManager", values: [string]): string;
 
-  decodeFunctionResult(
-    functionFragment: "managerContract",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: "addManager", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "removeItemToInventory",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "inventory", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "userId", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "addItemToInventory",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "destroy", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "removeManager",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "checkInventory",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "isManager", data: BytesLike): Result;
 
-  events: {};
+  events: {
+    "ManagerAdded(address)": EventFragment;
+    "ManagerRemoved(address)": EventFragment;
+  };
+
+  getEvent(nameOrSignatureOrTopic: "ManagerAdded"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ManagerRemoved"): EventFragment;
 }
+
+export type ManagerAddedEvent = TypedEvent<[string], { account: string }>;
+
+export type ManagerAddedEventFilter = TypedEventFilter<ManagerAddedEvent>;
+
+export type ManagerRemovedEvent = TypedEvent<[string], { account: string }>;
+
+export type ManagerRemovedEventFilter = TypedEventFilter<ManagerRemovedEvent>;
 
 export interface AbstractUser extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -98,94 +112,130 @@ export interface AbstractUser extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    managerContract(overrides?: CallOverrides): Promise<[string]>;
+    addManager(
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
 
     removeItemToInventory(
       itemId: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    inventory(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
-
-    userId(overrides?: CallOverrides): Promise<[string]>;
-
     addItemToInventory(
       itemId: BigNumberish,
+      url: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    destroy(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    removeManager(
+      account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     checkInventory(
       itemId: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<[boolean]>;
+    ): Promise<[string]>;
+
+    isManager(account: string, overrides?: CallOverrides): Promise<[boolean]>;
   };
 
-  managerContract(overrides?: CallOverrides): Promise<string>;
+  addManager(
+    account: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
 
   removeItemToInventory(
     itemId: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  inventory(arg0: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
-
-  userId(overrides?: CallOverrides): Promise<string>;
-
   addItemToInventory(
     itemId: BigNumberish,
+    url: BytesLike,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  destroy(
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  removeManager(
+    account: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   checkInventory(
     itemId: BigNumberish,
     overrides?: CallOverrides
-  ): Promise<boolean>;
+  ): Promise<string>;
+
+  isManager(account: string, overrides?: CallOverrides): Promise<boolean>;
 
   callStatic: {
-    managerContract(overrides?: CallOverrides): Promise<string>;
+    addManager(account: string, overrides?: CallOverrides): Promise<void>;
 
     removeItemToInventory(
       itemId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    inventory(arg0: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
-
-    userId(overrides?: CallOverrides): Promise<string>;
-
     addItemToInventory(
       itemId: BigNumberish,
+      url: BytesLike,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    destroy(overrides?: CallOverrides): Promise<void>;
+
+    removeManager(account: string, overrides?: CallOverrides): Promise<void>;
 
     checkInventory(
       itemId: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<boolean>;
+    ): Promise<string>;
+
+    isManager(account: string, overrides?: CallOverrides): Promise<boolean>;
   };
 
-  filters: {};
+  filters: {
+    "ManagerAdded(address)"(account?: string | null): ManagerAddedEventFilter;
+    ManagerAdded(account?: string | null): ManagerAddedEventFilter;
+
+    "ManagerRemoved(address)"(
+      account?: string | null
+    ): ManagerRemovedEventFilter;
+    ManagerRemoved(account?: string | null): ManagerRemovedEventFilter;
+  };
 
   estimateGas: {
-    managerContract(overrides?: CallOverrides): Promise<BigNumber>;
+    addManager(
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
     removeItemToInventory(
       itemId: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    inventory(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    userId(overrides?: CallOverrides): Promise<BigNumber>;
-
     addItemToInventory(
       itemId: BigNumberish,
+      url: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    destroy(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    removeManager(
+      account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -193,30 +243,43 @@ export interface AbstractUser extends BaseContract {
       itemId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
+
+    isManager(account: string, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    managerContract(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    addManager(
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
 
     removeItemToInventory(
       itemId: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    inventory(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    userId(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
     addItemToInventory(
       itemId: BigNumberish,
+      url: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    destroy(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    removeManager(
+      account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     checkInventory(
       itemId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    isManager(
+      account: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };
