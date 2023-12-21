@@ -15,35 +15,39 @@ describe('PlusMemberManager', () => {
     SbtFactory = await ethers.getContractFactory("PlusMemberSbt", sbtDeployer.getAddress());
   })
 
-  beforeEach(async () => {
-    plusMemberSbt = await SbtFactory.deploy();
-    userCA = signer.getAddress();
-  });
+  describe('mintNext', () => {
+    before(() => {
+      userCA = signer.getAddress();
+    })
+    beforeEach(async () => {
+      plusMemberSbt = await SbtFactory.deploy();
+    });
 
-  it('throws error if sender is not a manager', async () => {
-    await plusMemberSbt.removeManager(sbtDeployer.getAddress());
+    it('throws error if sender is not a manager', async () => {
+      await plusMemberSbt.removeManager(sbtDeployer.getAddress());
 
-    try {
+      try {
+        await plusMemberSbt.mintNext(userCA);
+      } catch (e: any) {
+        expect(e.message).contain('caller does not have the Manager role');
+      }
+    })
+
+    it('throws error if userCA has already tokenId', async () => {
       await plusMemberSbt.mintNext(userCA);
-    } catch (e: any) {
-      expect(e.message).contain('caller does not have the Manager role');
-    }
-  })
 
-  it('throws error if userCA has already tokenId', async () => {
-    await plusMemberSbt.mintNext(userCA);
+      try {
+        await plusMemberSbt.mintNext(userCA);
+      } catch (e: any) {
+        expect(e.message).contain('Member already exists');
+      }
+    });
 
-    try {
-      await plusMemberSbt.mintNext(userCA);
-    } catch (e: any) {
-      expect(e.message).contain('Member already exists');
-    }
-  });
+    it('passes', async () => {
+      const tx = await plusMemberSbt.mintNext(userCA);
+      await tx.wait();
 
-  it('passes', async () => {
-    const tx = await plusMemberSbt.mintNext(userCA);
-    await tx.wait();
-
-    expect((await plusMemberSbt.isPlusMember(userCA))).eq(true);
+      expect((await plusMemberSbt.isPlusMember(userCA))).eq(true);
+    })
   })
 })
