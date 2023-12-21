@@ -44,8 +44,7 @@ describe('PlusMemberManager', () => {
     });
 
     it('passes', async () => {
-      const tx = await plusMemberSbt.mintNext(userCA);
-      await tx.wait();
+      await plusMemberSbt.mintNext(userCA);
 
       expect((await plusMemberSbt.isPlusMember(userCA))).eq(true);
     })

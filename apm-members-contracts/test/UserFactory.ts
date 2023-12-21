@@ -9,6 +9,8 @@ describe('UserFactory', () => {
   let sbtDeployer: any;
   let userUuid: string;
   let userFactory: UserFactory;
+
+  const zeroAddress = '0x0000000000000000000000000000000000000000';
   
   before(async () => {
     [sbtDeployer] = await ethers.getSigners(), 
@@ -16,8 +18,6 @@ describe('UserFactory', () => {
   })
 
   describe('createUser', () => {
-    const zeroAddress = '0x0000000000000000000000000000000000000000';
-
     before(() => {
       userUuid = utils.formatBytes32String('user_uuid_for_test');
     })
@@ -35,7 +35,7 @@ describe('UserFactory', () => {
       }
     });
 
-    it('throws error if userCA has already tokenId', async () => {
+    it('throws error if userUuid has already registered', async () => {
       await userFactory.createUser(userUuid);
 
       try {
@@ -46,10 +46,44 @@ describe('UserFactory', () => {
     });
 
     it('passes', async () => {
-      const tx = await userFactory.createUser(userUuid);
-      await tx.wait()
+      await userFactory.createUser(userUuid);
       
       expect(await userFactory.getUserCA(userUuid) !== zeroAddress).eq(true)
+    })
+  })
+
+  describe('removeUser', () => {
+    before(() => {
+      userUuid = utils.formatBytes32String('user_uuid_for_test');
+    })
+    beforeEach(async () => {
+      userFactory = await UserFactoryFactory.deploy();
+    });
+  
+    it('throws error if sender is not a manager', async () => {
+      await userFactory.removeManager(sbtDeployer.getAddress());
+
+      try {
+        await userFactory.removeUser(userUuid);
+      } catch (e: any) {
+        expect(e.message).contain('caller does not have the Manager role');
+      }
+    });
+
+    it('throws error if userUuid has not registered', async () => {
+      try {
+        await userFactory.removeUser(userUuid);
+      } catch (e: any) {
+        expect(e.message).contain('userId does not exists');
+      }
+    });
+
+    it('passes', async () => {
+      await userFactory.createUser(userUuid);
+
+      await userFactory.removeUser(userUuid);
+      
+      expect(await userFactory.getUserCA(userUuid) === zeroAddress).eq(true)
     })
   })
 })
