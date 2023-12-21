@@ -35,7 +35,7 @@ describe('UserFactory', () => {
       }
     });
 
-    it('throws error if userUuid has already registered', async () => {
+    it('throws error if user has already userCA', async () => {
       await userFactory.createUser(userUuid);
 
       try {
@@ -45,7 +45,7 @@ describe('UserFactory', () => {
       }
     });
 
-    it('passes', async () => {
+    it('creates a userCA', async () => {
       await userFactory.createUser(userUuid);
       
       expect(await userFactory.getUserCA(userUuid) !== zeroAddress).eq(true)
@@ -70,7 +70,7 @@ describe('UserFactory', () => {
       }
     });
 
-    it('throws error if userUuid has not registered', async () => {
+    it('throws error if user does not have userCA', async () => {
       try {
         await userFactory.removeUser(userUuid);
       } catch (e: any) {
@@ -78,7 +78,7 @@ describe('UserFactory', () => {
       }
     });
 
-    it('passes', async () => {
+    it('inactivates the userCA', async () => {
       await userFactory.createUser(userUuid);
 
       await userFactory.removeUser(userUuid);
