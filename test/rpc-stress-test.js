@@ -7,7 +7,8 @@ const fromAddress = web3.eth.accounts.privateKeyToAccount(senderPrivateKey).addr
 
 // nonce 값을 초기화하는 별도의 비동기 함수
 async function initializeNonce() {
-    return await web3.eth.getTransactionCount(fromAddress, 'pending');
+    return web3.eth.getTransactionCount(fromAddress, 'pending');
+    return Number(nonce); // nonce를 숫자로 명시적 변환
 }
 
 // ETH 전송 함수
@@ -30,13 +31,20 @@ const sendEth = async (nonce) => {
         const receipt = await web3.eth.sendSignedTransaction(signedTx.rawTransaction);
 
         console.log(`Success: ${receipt.status}, TxID: ${receipt.transactionHash}, Amount: ${web3.utils.fromWei(amount, 'ether')} RAPM, To: ${toAddress}`);
-
+        return nonce + 1;
     } catch (error) {
         console.error(`Error: ${error.message}`);
+        if (error.message.includes('ETIMEDOUT')) {
+            setTimeout(() => sendEth(nonce), 3000); // 3초 후 재시도
+        }
+        return nonce + 1;
     }
 };
 
 // nonce 값을 초기화하고, sendEth 함수를 반복적으로 호출
-initializeNonce().then((nonce) => {
-    setInterval(() => sendEth(nonce++), 1000);
-});
+(async () => {
+    let nonce = await initializeNonce();
+    setInterval(async () => {
+        nonce = await sendEth(nonce);
+    }, 500);
+})();
