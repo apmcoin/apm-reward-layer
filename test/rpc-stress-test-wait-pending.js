@@ -13,14 +13,15 @@ async function initializeNonce() {
 
 const sendRAPM = async (nonce) => {
     try {
-        const toAddress = ethers.hexlify(ethers.randomBytes(20));
+        //const toAddress = ethers.hexlify(ethers.randomBytes(20));
+        const toAddress = "0x000000000000000000000000000000000000dEaD";
         const amount = ethers.parseUnits(`${(Math.random() * 0.09 + 0.01).toFixed(2)}`, 'ether');
 
         const transaction = await wallet.sendTransaction({
             to: toAddress,
             value: amount,
             gasLimit: ethers.getBigInt(42000),
-            gasPrice: ethers.parseUnits('20', 'gwei'), //RAPM네트워크의 최소 가스값. 정말 중요한 tx가 아닌 이상 해당 값을 사용한다.
+            gasPrice: ethers.parseUnits('40', 'gwei'), //RAPM네트워크의 최소 가스값. 정말 중요한 tx가 아닌 이상 해당 값을 사용한다.
             nonce, // Ethers 의 Wallet객체는 Nonce를 자체 관리하여 Web3js보단 Nonce예외가 적지만, 극단적인 tx 호출에선 여전히-혹은 오히려 더 별도의 Nonce 관리가 필요하다.
           });
 
@@ -32,7 +33,7 @@ const sendRAPM = async (nonce) => {
     } catch (error) {
         console.error(`Error: ${error.message}`);
         if (error.message.includes('ETIMEDOUT')) {
-            setTimeout(sendRAPM, 3000); // 3초 후 재시도
+            setTimeout(sendRAPM, 2000); // 2초 후 재시도
         }
         
         return nonce + 1; // 실패한 트랜잭션의 경우에도 nonce 증가
@@ -48,7 +49,7 @@ const sendRAPM = async (nonce) => {
         //재귀 호출을 하며 마지막 nonce를 받아서 사용한다.
         nonce = await sendRAPM(nonce);
         //컨펌 완료를 기다리지 않으므로 시간 증가
-        setTimeout(sendTransaction, 500); 
+        setTimeout(sendTransaction, 100); 
     };
     sendTransaction();
 })();
