@@ -39,7 +39,7 @@ async function storeRandomNumber(contract, nonce) {
             gasPrice: ethers.parseUnits('20', 'gwei'), //RAPM네트워크의 최소 가스값. 정말 중요한 tx가 아닌 이상 해당 값을 사용한다.
             nonce: nonce 
         });
-        await tx.wait();
+        await tx.wait();//컨펌까지 기다리기
         console.log(`Stored ${randomNum} at nonce ${nonce}`);
         return nonce + 1;  // Increment nonce only after successful transaction
     } catch (error) {
@@ -53,7 +53,7 @@ async function storeRandomNumber(contract, nonce) {
 
     const sendTransaction = async () => {
         nonce = await storeRandomNumber(contract, nonce);  // Update nonce with returned value
-        setTimeout(sendTransaction, 5000);  // Call the function again after 5 seconds
+        setTimeout(sendTransaction, 100);  // Call the function again after 5 seconds
     };
     sendTransaction();
 })();
