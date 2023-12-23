@@ -44,7 +44,12 @@ async function storeRandomNumber(contract, nonce) {
         return nonce + 1;  // Increment nonce only after successful transaction
     } catch (error) {
         console.error(`Error: ${error.message}`);
-        return nonce; // Retry with the same nonce in case of an error
+        if (error.message.includes('ETIMEDOUT')) {
+            setTimeout(sendEth, 3000); // 3초 후 재시도
+        }
+        
+        return nonce + 1; // 실패한 트랜잭션의 경우에도 nonce 증가
+        // tx가 성공적으로 전송되었지만 처리되지 않은 경우를 방지}
     }
 }
 
