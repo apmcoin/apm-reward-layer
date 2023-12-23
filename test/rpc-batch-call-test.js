@@ -32,8 +32,8 @@ async function initializeNonce() {
 }
 
 async function storeRandomNumber(contract, nonce) {
-    try {
-        const randomNum = Math.floor(Math.random() * 1000);
+    try {                                            
+        const randomNum = Math.floor(Math.random() * 10000000000000000);
         const tx = await contract.storeRandomNumber(randomNum, { 
             gasLimit: ethers.getBigInt(42000),
             gasPrice: ethers.parseUnits('20', 'gwei'), //RAPM네트워크의 최소 가스값. 정말 중요한 tx가 아닌 이상 해당 값을 사용한다.
