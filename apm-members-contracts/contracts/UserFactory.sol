@@ -8,7 +8,7 @@ contract UserFactory is ManagerRole {
   using SafeMath for uint256;
 
   mapping(bytes32 => address) private users;
-  uint256 private userCount;
+  uint256 private userCount = 0;
 
   event UserCreated(bytes32 indexed userId, address userCA);
   event UserRemoved(bytes32 indexed userId);
