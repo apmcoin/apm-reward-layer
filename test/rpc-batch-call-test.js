@@ -1,31 +1,13 @@
 require('dotenv').config();
 const fs = require('fs');
 const { ethers } = require('ethers');
+const csv = require('csv-parser');
 
 const provider = new ethers.JsonRpcProvider(process.env.RPC_URL);
 const wallet = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
+const contractABI = require('./abi/UserFactoryABI.json');
 
-const contractABI = [
-    {
-        "constant": false,
-        "inputs": [{"name": "_randomNumber", "type": "uint256"}],
-        "name": "storeRandomNumber",
-        "outputs": [],
-        "payable": false,
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "constant": true,
-        "inputs": [],
-        "name": "lastRandomNumber",
-        "outputs": [{"name": "", "type": "uint256"}],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-    }
-];
-const deployedContractAddress = "0xA9Ba734c4fDf2296755daEfa3F8E13faA3B98F0f";
+const deployedContractAddress = "0x3e0E92d4a01868d7B8A43AA34AA75c858443693C";
 const contract = new ethers.Contract(deployedContractAddress, contractABI, wallet);
 
 async function initializeNonce() {
@@ -33,41 +15,45 @@ async function initializeNonce() {
 }
 
 // 에러 로그 기록 함수
-function logError(error, nonce) {
+function logError(error, nonce, userId) {
     const timestamp = new Date().toLocaleString("ko-KR", { timeZone: "Asia/Seoul" });
-    const logMessage = `${timestamp} - Nonce: ${nonce} - Error: ${error}\n`;
-    fs.appendFileSync('errlog.txt', logMessage);
+    const logMessage = `${timestamp} - Nonce: ${nonce} - UserID: ${userId} - Error: ${error}\n`;
+    fs.appendFileSync('user-errlog.txt', logMessage);
 }
 
-async function storeRandomNumber(contract, nonce, attempt = 0) {
-    try {                                            
-        const randomNum = Math.floor(Math.random() * 999999999999999);
-        const tx = await contract.storeRandomNumber(randomNum, { 
-            gasLimit: ethers.getBigInt(42000),
-            gasPrice: ethers.parseUnits('20', 'gwei'), //RAPM Minimum gas fee
-            nonce: nonce 
+async function createUser(contract, userId, nonce, attempt = 0) {
+    try {
+        const formattedUserId = ethers.utils.formatBytes32String(userId);
+        const tx = await userFactory.createUser(formattedUserId, {
+            gasLimit: ethers.getBigInt(142000),
+            gasPrice: ethers.parseUnits('100', 'gwei'),
+            nonce: nonce
         });
-        await tx.wait();//컨펌까지 기다리기
-        console.log(`Stored ${randomNum} at nonce ${nonce}`);
-        
+        console.log(`User created with tx: ${tx.hash} for UserID: ${userId}`);
+        //await tx.wait(); //컨펌 대기
     } catch (error) {
-        console.error(`Error: ${error.message}`);
-        logError(error.message, nonce); // 에러 로그 기록
+        console.error(`Error creating user ${userId}:`, error);
+        logError(error, userId);
 
-        // 네트워크 타임아웃 에러 발생 시 무제한 재시도
-        console.log(`Error code: ${error.code}. Attempting to retry for nonce ${nonce}...`);
+        // 타임아웃 에러 또는 기타 오류에 대한 재시도 로직
+        console.log(`Error code: ${error.code}. Retrying for userID ${userId}, Attempting to retry for nonce ${nonce}...`);
         await new Promise(resolve => setTimeout(resolve, 3000)); // 3초 대기 후 재시도
-        return storeRandomNumber(contract, nonce, attempt + 1); // 재귀적으로 재시도
+        return createUser(contract, userId, nonce, attempt + 1); // 재귀적으로 재시도
     }
+    
     return nonce + 1;  //성공 시 논스 증가
 }
 
 (async () => {
     let nonce = await initializeNonce();
-
-    const sendTransaction = async () => {
-        nonce = await storeRandomNumber(contract, nonce);  // Update nonce with returned value
-        setTimeout(sendTransaction, 100);  // wait and re send
-    };
-    sendTransaction();
+    const results = [];
+    
+    fs.createReadStream('./data/user_uuid_list.csv')
+        .pipe(csv())
+        .on('data', (data) => results.push(data.uuid))
+        .on('end', async () => {
+            for (let userId of results) {
+                nonce = await createUser(contract, userId, nonce); // 순차적으로 UUID 처리
+            }
+        });
 })();

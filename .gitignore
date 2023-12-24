@@ -21,3 +21,4 @@ node_modules/
 
 data/
 test/errlog.txt
+test/user-errlog.txt
