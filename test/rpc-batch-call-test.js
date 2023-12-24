@@ -33,7 +33,7 @@ async function initializeNonce() {
 
 async function storeRandomNumber(contract, nonce) {
     try {                                            
-        const randomNum = Math.floor(Math.random() * 9999999999999999);
+        const randomNum = Math.floor(Math.random() * 1000000000000000);
         const tx = await contract.storeRandomNumber(randomNum, { 
             gasLimit: ethers.getBigInt(42000),
             gasPrice: ethers.parseUnits('20', 'gwei'), //RAPM네트워크의 최소 가스값. 정말 중요한 tx가 아닌 이상 해당 값을 사용한다.
@@ -44,9 +44,11 @@ async function storeRandomNumber(contract, nonce) {
         return nonce + 1;  // Increment nonce only after successful transaction
     } catch (error) {
         console.error(`Error: ${error.message}`);
-        if (error.message.includes('ETIMEDOUT')) {
-            setTimeout(sendEth, 3000); // 3초 후 재시도
-        }
+        //if (error.message.includes('ETIMEDOUT')) {
+        //}
+
+        // 재귀 호출 시 contract 인자를 명시적으로 전달
+        setTimeout(() => storeRandomNumber(contract, nonce), 3000);
         
         return nonce + 1; // 실패한 트랜잭션의 경우에도 nonce 증가
         // tx가 성공적으로 전송되었지만 처리되지 않은 경우를 방지}
