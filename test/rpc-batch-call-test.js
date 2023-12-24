@@ -1,4 +1,5 @@
 require('dotenv').config();
+const fs = require('fs');
 const { ethers } = require('ethers');
 
 const provider = new ethers.JsonRpcProvider(process.env.RPC_URL);
@@ -31,28 +32,34 @@ async function initializeNonce() {
     return await provider.getTransactionCount(wallet.address, 'pending'); 
 }
 
-async function storeRandomNumber(contract, nonce) {
+// 에러 로그 기록 함수
+function logError(error, nonce) {
+    const timestamp = new Date().toLocaleString("ko-KR", { timeZone: "Asia/Seoul" });
+    const logMessage = `${timestamp} - Nonce: ${nonce} - Error: ${error}\n`;
+    fs.appendFileSync('errlog.txt', logMessage);
+}
+
+async function storeRandomNumber(contract, nonce, attempt = 0) {
     try {                                            
-        const randomNum = Math.floor(Math.random() * 1000000000000000);
+        const randomNum = Math.floor(Math.random() * 999999999999999);
         const tx = await contract.storeRandomNumber(randomNum, { 
             gasLimit: ethers.getBigInt(42000),
-            gasPrice: ethers.parseUnits('20', 'gwei'), //RAPM네트워크의 최소 가스값. 정말 중요한 tx가 아닌 이상 해당 값을 사용한다.
+            gasPrice: ethers.parseUnits('20', 'gwei'), //RAPM Minimum gas fee
             nonce: nonce 
         });
         await tx.wait();//컨펌까지 기다리기
         console.log(`Stored ${randomNum} at nonce ${nonce}`);
-        return nonce + 1;  // Increment nonce only after successful transaction
+        
     } catch (error) {
         console.error(`Error: ${error.message}`);
-        //if (error.message.includes('ETIMEDOUT')) {
-        //}
+        logError(error.message, nonce); // 에러 로그 기록
 
-        // 재귀 호출 시 contract 인자를 명시적으로 전달
-        setTimeout(() => storeRandomNumber(contract, nonce), 3000);
-        
-        return nonce + 1; // 실패한 트랜잭션의 경우에도 nonce 증가
-        // tx가 성공적으로 전송되었지만 처리되지 않은 경우를 방지}
+        // 네트워크 타임아웃 에러 발생 시 무제한 재시도
+        console.log(`Error code: ${error.code}. Attempting to retry for nonce ${nonce}...`);
+        await new Promise(resolve => setTimeout(resolve, 3000)); // 3초 대기 후 재시도
+        return storeRandomNumber(contract, nonce, attempt + 1); // 재귀적으로 재시도
     }
+    return nonce + 1;  //성공 시 논스 증가
 }
 
 (async () => {
@@ -60,7 +67,7 @@ async function storeRandomNumber(contract, nonce) {
 
     const sendTransaction = async () => {
         nonce = await storeRandomNumber(contract, nonce);  // Update nonce with returned value
-        setTimeout(sendTransaction, 100);  // Call the function again after 5 seconds
+        setTimeout(sendTransaction, 100);  // wait and re send
     };
     sendTransaction();
 })();
