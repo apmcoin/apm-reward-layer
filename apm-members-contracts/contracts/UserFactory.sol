@@ -32,6 +32,10 @@ contract UserFactory is ManagerRole {
     emit UserCreated(userId, userCA);
   }
 
+  function getUserCount() public view returns(uint256) {
+        return userCount;
+  }
+
   function removeUser(bytes32 userId) public onlyManager {
     require(users[userId] != address(0), "UserFactory: userId does not exists");
 
