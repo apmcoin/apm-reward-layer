@@ -49,7 +49,7 @@ const sendRAPM = async (nonce) => {
         //재귀 호출을 하며 마지막 nonce를 받아서 사용한다.
         nonce = await sendRAPM(nonce);
         //컨펌 완료를 기다리지 않으므로 시간 증가
-        setTimeout(sendTransaction, 100); 
+        setTimeout(sendTransaction, 5000); 
     };
     sendTransaction();
 })();
