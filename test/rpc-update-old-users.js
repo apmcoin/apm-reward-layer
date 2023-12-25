@@ -50,7 +50,6 @@ async function createUser(userId, nonce, attempt = 0) {
         const userExists = await userFactory.hasUserCA(formattedUserId);
         if (userExists) {
             console.log(`UserID ${userId} already exists. Skipping...`);
-            await new Promise(resolve => setTimeout(resolve, 200));  // 0.5초 대기
             return nonce; //스킵했으므로 논스 증가 안함
         }
 
@@ -60,13 +59,21 @@ async function createUser(userId, nonce, attempt = 0) {
             nonce: nonce
         });
         console.log(`User created with tx: ${tx.hash} for UserID: ${userId} , bytes: ${formattedUserId}`);
-        await tx.wait();  // Uncomment if you need to wait for transaction confirmation
+        await tx.wait();  // 1컨펌 대기
+        //await new Promise(resolve => setTimeout(resolve, 500));//테스트용 코드. txpool 상태가 안좋아진다.
         return nonce + 1;  // 성공 시 nonce 증가
 
         
     } catch (error) {
         console.error(`Error creating user ${userId}:`, error);
         logError(error, nonce, userId);
+
+        if (error.code === 'NONCE_EXPIRED') {
+            // 해당 nonce가 tx pool에 있다고 가정한다. 
+            console.log(`Nonce expired for user ${userId}. Incrementing nonce and retrying.`);
+            return createUser(userId, nonce + 1, attempt);  // 재시도
+        }
+
         await new Promise(resolve => setTimeout(resolve, 3000));  // 재시도 전 대기
         return createUser(userId, nonce, attempt + 1);  // 재귀적으로 재시도
     }
@@ -83,6 +90,7 @@ async function createUser(userId, nonce, attempt = 0) {
         .on('end', async () => {
             for (let userId of results) {
                 nonce = await createUser(userId, nonce);  // 순차적으로 UUID 처리
+                //await new Promise(resolve => setTimeout(resolve, 200));
             }
         });
 })();

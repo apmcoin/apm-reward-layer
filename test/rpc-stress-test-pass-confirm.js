@@ -13,14 +13,15 @@ async function initializeNonce() {
 
 const sendRAPM = async (nonce) => {
     try {
-        const toAddress = ethers.hexlify(ethers.randomBytes(20));
+        //const toAddress = ethers.hexlify(ethers.randomBytes(20));
+        const toAddress = "0x000000000000000000000000000000000000dEaD";
         const amount = ethers.parseUnits(`${(Math.random() * 0.09 + 0.01).toFixed(2)}`, 'ether');
 
         const receipt  = await wallet.sendTransaction({
             to: toAddress,
             value: amount,
             gasLimit: ethers.getBigInt(42000),
-            gasPrice: ethers.parseUnits('20', 'gwei'), //RAPM네트워크의 최소 가스값. 정말 중요한 tx가 아닌 이상 해당 값을 사용한다.
+            gasPrice: ethers.parseUnits('100', 'gwei'), //RAPM네트워크의 최소 가스값. 정말 중요한 tx가 아닌 이상 해당 값을 사용한다.
             nonce, // Ethers 의 Wallet객체는 Nonce를 자체 관리하여 Web3js보단 Nonce예외가 적지만, 극단적인 tx 호출에선 여전히-혹은 오히려 더 별도의 Nonce 관리가 필요하다.
           });
 
@@ -48,7 +49,7 @@ const sendRAPM = async (nonce) => {
     const sendTransaction = async () => {
         //재귀 호출을 하며 마지막 nonce를 받아서 사용한다.
         nonce = await sendRAPM(nonce);
-        setTimeout(sendTransaction, 100); 
+        setTimeout(sendTransaction, 10); 
     };
     sendTransaction();
 })();
