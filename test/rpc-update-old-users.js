@@ -23,9 +23,24 @@ function logRetryFailure(userId) {
     fs.appendFileSync('user-retry-failures.txt', logMessage);
 }
 
-async function initializeNonce() {
-    return await provider.getTransactionCount(wallet.address, 'latest'); 
+async function initializeNonce(attempt = 0, userId = "system") {
+    const maxAttempts = 5;  // 최대 재시도 횟수
+
+    try {
+        return await provider.getTransactionCount(wallet.address, 'latest'); 
+    } catch (error) {
+        console.error(`Error initializing nonce, attempt ${attempt}:`, error);
+        logError(error, "N/A", userId);  // logError 함수를 호출하여 오류 기록
+
+        if (attempt >= maxAttempts) {
+            throw new Error('Max attempts reached in initializeNonce');
+        }
+
+        await new Promise(resolve => setTimeout(resolve, 3000)); // 잠시 대기 후 재시도
+        return initializeNonce(attempt + 1, userId);
+    }
 }
+
 
 function convertUuidToBytes32(uuid) {
     // UUID 문자열을 32 바이트로 변환
