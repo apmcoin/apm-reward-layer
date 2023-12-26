@@ -5,7 +5,7 @@ const csv = require('csv-parser');
 
 const provider = new ethers.JsonRpcProvider(process.env.RPC_URL);
 const wallet = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
-const contractABI = require('./abi/UserFactoryABI.json');
+const contractABI = require('./abi/UserFactory.json').abi;
 const deployedContractAddress = "0xF38211DF9ccD073Ec4856213d00d224C7e2340DA";
 const userFactory = new ethers.Contract(deployedContractAddress, contractABI, wallet);
 
@@ -61,6 +61,7 @@ async function createUser(userId, nonce, attempt = 0) {
 
     try {
         const formattedUserId = convertUuidToBytes32(userId);
+        
 
         const userExists = await userFactory.hasUserCA(formattedUserId);
         if (userExists) {
@@ -68,11 +69,18 @@ async function createUser(userId, nonce, attempt = 0) {
             return nonce; //스킵했으므로 논스 증가 안함
         }
 
+        // 가스 추정
+        const estimatedGas = await userFactory.createUser.estimateGas(formattedUserId);
+        console.log(`Estimated gas for creating user ${userId}: ${estimatedGas.toString()}`);
+
+        // 트랜잭션 발송
         const tx = await userFactory.createUser(formattedUserId, {
-            gasLimit: ethers.parseUnits('8000000', 'wei'),
-            gasPrice: ethers.parseUnits('22', 'gwei'),
+            gasLimit: estimatedGas + BigInt(1000),  // BigInt 연산 사용
+            gasPrice: ethers.parseUnits('20', 'gwei'),
             nonce: nonce
         });
+
+
         console.log(`User created with tx: ${tx.hash} for UserID: ${userId} , bytes: ${formattedUserId}`);
         await tx.wait();  // 1컨펌 대기
         //await new Promise(resolve => setTimeout(resolve, 500));//테스트용 코드. txpool 상태가 안좋아진다.
