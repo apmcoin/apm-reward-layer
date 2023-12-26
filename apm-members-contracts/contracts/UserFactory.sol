@@ -19,6 +19,10 @@ contract UserFactory is ManagerRole {
 
   function hasUserCA(bytes32 userId) public view returns(bool) {
     return users[userId] != address(0) ? true : false;
+  }
+
+  function getUserCount() public view returns(uint256) {
+    return userCount;
   } 
 
   function createUser(bytes32 userId) public onlyManager {
@@ -32,10 +36,6 @@ contract UserFactory is ManagerRole {
     emit UserCreated(userId, userCA);
   }
 
-  function getUserCount() public view returns(uint256) {
-        return userCount;
-  }
-
   function removeUser(bytes32 userId) public onlyManager {
     require(users[userId] != address(0), "UserFactory: userId does not exists");
 
@@ -45,5 +45,11 @@ contract UserFactory is ManagerRole {
     userCount = userCount.sub(1);
 
     emit UserRemoved(userId);
+  }
+
+  function createBulkUser(bytes32[] memory userIds) public {
+    for(uint i = 0; i < userIds.length; i++) {
+      createUser(userIds[i]);
+    }
   }
 }
