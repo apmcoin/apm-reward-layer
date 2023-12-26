@@ -24,6 +24,7 @@ export interface UserFactoryInterface extends utils.Interface {
     "hasUserCA(bytes32)": FunctionFragment;
     "createUser(bytes32)": FunctionFragment;
     "removeManager(address)": FunctionFragment;
+    "getUserCount()": FunctionFragment;
     "isManager(address)": FunctionFragment;
   };
 
@@ -48,6 +49,10 @@ export interface UserFactoryInterface extends utils.Interface {
     functionFragment: "removeManager",
     values: [string]
   ): string;
+  encodeFunctionData(
+    functionFragment: "getUserCount",
+    values?: undefined
+  ): string;
   encodeFunctionData(functionFragment: "isManager", values: [string]): string;
 
   decodeFunctionResult(functionFragment: "addManager", data: BytesLike): Result;
@@ -57,6 +62,10 @@ export interface UserFactoryInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "createUser", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "removeManager",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getUserCount",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "isManager", data: BytesLike): Result;
@@ -144,6 +153,8 @@ export interface UserFactory extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    getUserCount(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     isManager(account: string, overrides?: CallOverrides): Promise<[boolean]>;
   };
 
@@ -171,6 +182,8 @@ export interface UserFactory extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  getUserCount(overrides?: CallOverrides): Promise<BigNumber>;
+
   isManager(account: string, overrides?: CallOverrides): Promise<boolean>;
 
   callStatic: {
@@ -185,6 +198,8 @@ export interface UserFactory extends BaseContract {
     createUser(userId: BytesLike, overrides?: CallOverrides): Promise<void>;
 
     removeManager(account: string, overrides?: CallOverrides): Promise<void>;
+
+    getUserCount(overrides?: CallOverrides): Promise<BigNumber>;
 
     isManager(account: string, overrides?: CallOverrides): Promise<boolean>;
   };
@@ -236,6 +251,8 @@ export interface UserFactory extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    getUserCount(overrides?: CallOverrides): Promise<BigNumber>;
+
     isManager(account: string, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
@@ -269,6 +286,8 @@ export interface UserFactory extends BaseContract {
       account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
+
+    getUserCount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     isManager(
       account: string,
