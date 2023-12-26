@@ -6,7 +6,7 @@ const csv = require('csv-parser');
 const provider = new ethers.JsonRpcProvider(process.env.RPC_URL);
 const wallet = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
 const contractABI = require('./abi/UserFactory.json').abi;
-const deployedContractAddress = "0xF38211DF9ccD073Ec4856213d00d224C7e2340DA";
+const deployedContractAddress = "0x62a8f4FBE767f5B73C62Fc6999dFdd38b7166ee8";
 const userFactory = new ethers.Contract(deployedContractAddress, contractABI, wallet);
 
 // 에러 로그 기록 함수
@@ -113,7 +113,7 @@ async function createUser(userId, nonce, attempt = 0) {
         .on('end', async () => {
             for (let userId of results) {
                 nonce = await createUser(userId, nonce);  // 순차적으로 UUID 처리
-                await new Promise(resolve => setTimeout(resolve, 200));
+                await new Promise(resolve => setTimeout(resolve, 500));
             }
         });
 })();
