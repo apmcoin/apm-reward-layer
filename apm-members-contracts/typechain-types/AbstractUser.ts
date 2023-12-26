@@ -19,6 +19,7 @@ import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 
 export interface AbstractUserInterface extends utils.Interface {
   functions: {
+    "isActive()": FunctionFragment;
     "addManager(address)": FunctionFragment;
     "removeItemToInventory(uint256)": FunctionFragment;
     "addItemToInventory(uint256,bytes32)": FunctionFragment;
@@ -28,6 +29,7 @@ export interface AbstractUserInterface extends utils.Interface {
     "isManager(address)": FunctionFragment;
   };
 
+  encodeFunctionData(functionFragment: "isActive", values?: undefined): string;
   encodeFunctionData(functionFragment: "addManager", values: [string]): string;
   encodeFunctionData(
     functionFragment: "removeItemToInventory",
@@ -48,6 +50,7 @@ export interface AbstractUserInterface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "isManager", values: [string]): string;
 
+  decodeFunctionResult(functionFragment: "isActive", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "addManager", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "removeItemToInventory",
@@ -112,6 +115,8 @@ export interface AbstractUser extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    isActive(overrides?: CallOverrides): Promise<[boolean]>;
+
     addManager(
       account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -144,6 +149,8 @@ export interface AbstractUser extends BaseContract {
 
     isManager(account: string, overrides?: CallOverrides): Promise<[boolean]>;
   };
+
+  isActive(overrides?: CallOverrides): Promise<boolean>;
 
   addManager(
     account: string,
@@ -178,6 +185,8 @@ export interface AbstractUser extends BaseContract {
   isManager(account: string, overrides?: CallOverrides): Promise<boolean>;
 
   callStatic: {
+    isActive(overrides?: CallOverrides): Promise<boolean>;
+
     addManager(account: string, overrides?: CallOverrides): Promise<void>;
 
     removeItemToInventory(
@@ -214,6 +223,8 @@ export interface AbstractUser extends BaseContract {
   };
 
   estimateGas: {
+    isActive(overrides?: CallOverrides): Promise<BigNumber>;
+
     addManager(
       account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -248,6 +259,8 @@ export interface AbstractUser extends BaseContract {
   };
 
   populateTransaction: {
+    isActive(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     addManager(
       account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
