@@ -9,11 +9,14 @@ contract PlusMemberSbt is ERC721, ManagerRole {
     uint256 private currentTokenId; // 토큰 ID 카운터
     uint256 private plusMemberCount;
     mapping(address => uint256) private tokenIds;
+    string private baseURI;
 
     event PlusMemberAdded(address indexed userCA, uint256 tokenId);
     event PlusMemberRemoved(address userCA);
 
-    constructor() public ERC721() {}
+    constructor() public ERC721() {
+        baseURI = ""; // Initialize with an empty baseURI
+    }
 
     function getCurrentTokenId() public view returns (uint256) {
       return currentTokenId;
@@ -65,5 +68,38 @@ contract PlusMemberSbt is ERC721, ManagerRole {
       for (uint256 i = 0; i < userCAs.length; i++) {
         burn(userCAs[i]);
       }
+    }
+
+    // Set the base URI for all tokens, only callable by the manager
+    function setBaseURI(string memory newBaseURI) public onlyManager {
+        baseURI = newBaseURI;
+    }
+
+    // Override tokenURI function from ERC721 to construct and return the token's URI
+    function tokenURI(uint256 tokenId) public view returns (string memory) {
+        require(_exists(tokenId), "PlusMemberSbt: URI query for nonexistent token");
+        return string(abi.encodePacked(baseURI, "/", uint256ToString(tokenId)));
+    }
+
+    // Helper function to convert uint256 to string
+    function uint256ToString(uint256 value) private pure returns (string memory) {
+        // Implementation of uint256 to string conversion
+        if (value == 0) {
+            return "0";
+        }
+        uint256 temp = value;
+        uint256 digits;
+        while (temp != 0) {
+            digits++;
+            temp /= 10;
+        }
+        bytes memory buffer = new bytes(digits);
+        uint256 index = digits - 1;
+        temp = value;
+        while (temp != 0) {
+            buffer[index--] = byte(uint8(48 + temp % 10));
+            temp /= 10;
+        }
+        return string(buffer);
     }
 }
