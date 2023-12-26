@@ -3,13 +3,17 @@ pragma solidity 0.5.6;
 import "./ManagerRole.sol";
 
 contract AbstractUser is ManagerRole {
-  bytes32 private userId;
+  bytes32 private _userId;
   bool private _isActive;
   mapping(bool => mapping(uint256 => bytes32)) private inventory;
 
-  constructor(bytes32 _userId) public {
-    userId = _userId;
+  constructor(bytes32 userId) public {
+    _userId = userId;
     _isActive = true;
+  }
+
+  function getUserId() public view returns(bytes32) {
+    return _userId;
   }
 
   function isActive() public view returns(bool) {

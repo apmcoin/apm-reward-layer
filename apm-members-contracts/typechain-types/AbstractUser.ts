@@ -21,6 +21,7 @@ export interface AbstractUserInterface extends utils.Interface {
   functions: {
     "isActive()": FunctionFragment;
     "addManager(address)": FunctionFragment;
+    "getUserId()": FunctionFragment;
     "removeItemToInventory(uint256)": FunctionFragment;
     "addItemToInventory(uint256,bytes32)": FunctionFragment;
     "destroy()": FunctionFragment;
@@ -31,6 +32,7 @@ export interface AbstractUserInterface extends utils.Interface {
 
   encodeFunctionData(functionFragment: "isActive", values?: undefined): string;
   encodeFunctionData(functionFragment: "addManager", values: [string]): string;
+  encodeFunctionData(functionFragment: "getUserId", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "removeItemToInventory",
     values: [BigNumberish]
@@ -52,6 +54,7 @@ export interface AbstractUserInterface extends utils.Interface {
 
   decodeFunctionResult(functionFragment: "isActive", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "addManager", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "getUserId", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "removeItemToInventory",
     data: BytesLike
@@ -122,6 +125,8 @@ export interface AbstractUser extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    getUserId(overrides?: CallOverrides): Promise<[string]>;
+
     removeItemToInventory(
       itemId: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -157,6 +162,8 @@ export interface AbstractUser extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  getUserId(overrides?: CallOverrides): Promise<string>;
+
   removeItemToInventory(
     itemId: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
@@ -188,6 +195,8 @@ export interface AbstractUser extends BaseContract {
     isActive(overrides?: CallOverrides): Promise<boolean>;
 
     addManager(account: string, overrides?: CallOverrides): Promise<void>;
+
+    getUserId(overrides?: CallOverrides): Promise<string>;
 
     removeItemToInventory(
       itemId: BigNumberish,
@@ -230,6 +239,8 @@ export interface AbstractUser extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    getUserId(overrides?: CallOverrides): Promise<BigNumber>;
+
     removeItemToInventory(
       itemId: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -265,6 +276,8 @@ export interface AbstractUser extends BaseContract {
       account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
+
+    getUserId(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     removeItemToInventory(
       itemId: BigNumberish,
