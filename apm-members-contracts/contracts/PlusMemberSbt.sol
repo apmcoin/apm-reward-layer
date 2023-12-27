@@ -9,18 +9,14 @@ contract PlusMemberSbt is ERC721Full, ManagerRole {
     string private _name = "MembersPlusSBT";
     string private _symbol = "PLUS";
 
-
     uint256 private currentTokenId; // 토큰 ID 카운터
     uint256 private plusMemberCount;
     mapping(address => uint256) private tokenIds;
-    string private baseURI;
 
     event PlusMemberAdded(address indexed userCA, uint256 tokenId);
     event PlusMemberRemoved(address userCA);
 
-    constructor() public ERC721Full(_name, _symbol) {
-        baseURI = ""; // Initialize with an empty baseURI
-    }
+    constructor() public ERC721Full(_name, _symbol) {}
 
     function setDetailed(string memory name, string memory symbol) public onlyManager {
       _setDetailed(name, symbol);
