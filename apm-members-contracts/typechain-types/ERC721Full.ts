@@ -29,6 +29,7 @@ export interface ERC721FullInterface extends utils.Interface {
     "safeTransferFrom(address,address,uint256)": FunctionFragment;
     "tokenByIndex(uint256)": FunctionFragment;
     "ownerOf(uint256)": FunctionFragment;
+    "baseURI()": FunctionFragment;
     "balanceOf(address)": FunctionFragment;
     "symbol()": FunctionFragment;
     "setApprovalForAll(address,bool)": FunctionFragment;
@@ -73,6 +74,7 @@ export interface ERC721FullInterface extends utils.Interface {
     functionFragment: "ownerOf",
     values: [BigNumberish]
   ): string;
+  encodeFunctionData(functionFragment: "baseURI", values?: undefined): string;
   encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
   encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
   encodeFunctionData(
@@ -119,6 +121,7 @@ export interface ERC721FullInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "ownerOf", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "baseURI", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
   decodeFunctionResult(
@@ -248,6 +251,8 @@ export interface ERC721Full extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[string]>;
 
+    baseURI(overrides?: CallOverrides): Promise<[string]>;
+
     balanceOf(owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
@@ -325,6 +330,8 @@ export interface ERC721Full extends BaseContract {
 
   ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
+  baseURI(overrides?: CallOverrides): Promise<string>;
+
   balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
@@ -398,6 +405,8 @@ export interface ERC721Full extends BaseContract {
     ): Promise<BigNumber>;
 
     ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+
+    baseURI(overrides?: CallOverrides): Promise<string>;
 
     balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -512,6 +521,8 @@ export interface ERC721Full extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    baseURI(overrides?: CallOverrides): Promise<BigNumber>;
+
     balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
@@ -592,6 +603,8 @@ export interface ERC721Full extends BaseContract {
       tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
+
+    baseURI(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     balanceOf(
       owner: string,

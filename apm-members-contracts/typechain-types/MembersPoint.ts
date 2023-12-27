@@ -19,13 +19,17 @@ import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 
 export interface MembersPointInterface extends utils.Interface {
   functions: {
+    "name()": FunctionFragment;
     "approve(address,uint256)": FunctionFragment;
     "totalSupply()": FunctionFragment;
     "transferFrom(address,address,uint256)": FunctionFragment;
     "addManager(address)": FunctionFragment;
+    "decimals()": FunctionFragment;
     "increaseAllowance(address,uint256)": FunctionFragment;
     "mint(address,uint256)": FunctionFragment;
     "balanceOf(address)": FunctionFragment;
+    "setDetailed(string,string)": FunctionFragment;
+    "symbol()": FunctionFragment;
     "burn(address,uint256)": FunctionFragment;
     "decreaseAllowance(address,uint256)": FunctionFragment;
     "transfer(address,uint256)": FunctionFragment;
@@ -34,6 +38,7 @@ export interface MembersPointInterface extends utils.Interface {
     "isManager(address)": FunctionFragment;
   };
 
+  encodeFunctionData(functionFragment: "name", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "approve",
     values: [string, BigNumberish]
@@ -47,6 +52,7 @@ export interface MembersPointInterface extends utils.Interface {
     values: [string, string, BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "addManager", values: [string]): string;
+  encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "increaseAllowance",
     values: [string, BigNumberish]
@@ -56,6 +62,11 @@ export interface MembersPointInterface extends utils.Interface {
     values: [string, BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "setDetailed",
+    values: [string, string]
+  ): string;
+  encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "burn",
     values: [string, BigNumberish]
@@ -78,6 +89,7 @@ export interface MembersPointInterface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "isManager", values: [string]): string;
 
+  decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "totalSupply",
@@ -88,12 +100,18 @@ export interface MembersPointInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "addManager", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "increaseAllowance",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "setDetailed",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "burn", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "decreaseAllowance",
@@ -189,6 +207,8 @@ export interface MembersPoint extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    name(overrides?: CallOverrides): Promise<[string]>;
+
     approve(
       spender: string,
       value: BigNumberish,
@@ -209,6 +229,8 @@ export interface MembersPoint extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    decimals(overrides?: CallOverrides): Promise<[number]>;
+
     increaseAllowance(
       spender: string,
       addedValue: BigNumberish,
@@ -222,6 +244,14 @@ export interface MembersPoint extends BaseContract {
     ): Promise<ContractTransaction>;
 
     balanceOf(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    setDetailed(
+      newName: string,
+      newSymbol: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    symbol(overrides?: CallOverrides): Promise<[string]>;
 
     burn(
       userCA: string,
@@ -255,6 +285,8 @@ export interface MembersPoint extends BaseContract {
     isManager(account: string, overrides?: CallOverrides): Promise<[boolean]>;
   };
 
+  name(overrides?: CallOverrides): Promise<string>;
+
   approve(
     spender: string,
     value: BigNumberish,
@@ -275,6 +307,8 @@ export interface MembersPoint extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  decimals(overrides?: CallOverrides): Promise<number>;
+
   increaseAllowance(
     spender: string,
     addedValue: BigNumberish,
@@ -288,6 +322,14 @@ export interface MembersPoint extends BaseContract {
   ): Promise<ContractTransaction>;
 
   balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+  setDetailed(
+    newName: string,
+    newSymbol: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  symbol(overrides?: CallOverrides): Promise<string>;
 
   burn(
     userCA: string,
@@ -321,6 +363,8 @@ export interface MembersPoint extends BaseContract {
   isManager(account: string, overrides?: CallOverrides): Promise<boolean>;
 
   callStatic: {
+    name(overrides?: CallOverrides): Promise<string>;
+
     approve(
       spender: string,
       value: BigNumberish,
@@ -338,6 +382,8 @@ export interface MembersPoint extends BaseContract {
 
     addManager(account: string, overrides?: CallOverrides): Promise<void>;
 
+    decimals(overrides?: CallOverrides): Promise<number>;
+
     increaseAllowance(
       spender: string,
       addedValue: BigNumberish,
@@ -351,6 +397,14 @@ export interface MembersPoint extends BaseContract {
     ): Promise<void>;
 
     balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    setDetailed(
+      newName: string,
+      newSymbol: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    symbol(overrides?: CallOverrides): Promise<string>;
 
     burn(
       userCA: string,
@@ -432,6 +486,8 @@ export interface MembersPoint extends BaseContract {
   };
 
   estimateGas: {
+    name(overrides?: CallOverrides): Promise<BigNumber>;
+
     approve(
       spender: string,
       value: BigNumberish,
@@ -452,6 +508,8 @@ export interface MembersPoint extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    decimals(overrides?: CallOverrides): Promise<BigNumber>;
+
     increaseAllowance(
       spender: string,
       addedValue: BigNumberish,
@@ -465,6 +523,14 @@ export interface MembersPoint extends BaseContract {
     ): Promise<BigNumber>;
 
     balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    setDetailed(
+      newName: string,
+      newSymbol: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
     burn(
       userCA: string,
@@ -499,6 +565,8 @@ export interface MembersPoint extends BaseContract {
   };
 
   populateTransaction: {
+    name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     approve(
       spender: string,
       value: BigNumberish,
@@ -519,6 +587,8 @@ export interface MembersPoint extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
+    decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     increaseAllowance(
       spender: string,
       addedValue: BigNumberish,
@@ -535,6 +605,14 @@ export interface MembersPoint extends BaseContract {
       account: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
+
+    setDetailed(
+      newName: string,
+      newSymbol: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     burn(
       userCA: string,

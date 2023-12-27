@@ -21,20 +21,29 @@ export interface PlusMemberSbtInterface extends utils.Interface {
   functions: {
     "mintNext(address)": FunctionFragment;
     "supportsInterface(bytes4)": FunctionFragment;
+    "name()": FunctionFragment;
     "getApproved(uint256)": FunctionFragment;
     "approve(address,uint256)": FunctionFragment;
+    "totalSupply()": FunctionFragment;
     "transferFrom(address,address,uint256)": FunctionFragment;
     "addManager(address)": FunctionFragment;
+    "tokenOfOwnerByIndex(address,uint256)": FunctionFragment;
     "getPlusMemberCount()": FunctionFragment;
     "safeTransferFrom(address,address,uint256)": FunctionFragment;
+    "tokenByIndex(uint256)": FunctionFragment;
     "isPlusMember(address)": FunctionFragment;
     "getCurrentTokenId()": FunctionFragment;
     "ownerOf(uint256)": FunctionFragment;
+    "baseURI()": FunctionFragment;
     "balanceOf(address)": FunctionFragment;
     "burnMultiple(address[])": FunctionFragment;
+    "setDetailed(string,string)": FunctionFragment;
     "burn(address)": FunctionFragment;
+    "setBaseTokenUri(string)": FunctionFragment;
+    "symbol()": FunctionFragment;
     "setApprovalForAll(address,bool)": FunctionFragment;
     "removeManager(address)": FunctionFragment;
+    "tokenURI(uint256)": FunctionFragment;
     "mintMultiple(address[])": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
     "getTokenId(address)": FunctionFragment;
@@ -46,6 +55,7 @@ export interface PlusMemberSbtInterface extends utils.Interface {
     functionFragment: "supportsInterface",
     values: [BytesLike]
   ): string;
+  encodeFunctionData(functionFragment: "name", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "getApproved",
     values: [BigNumberish]
@@ -55,10 +65,18 @@ export interface PlusMemberSbtInterface extends utils.Interface {
     values: [string, BigNumberish]
   ): string;
   encodeFunctionData(
+    functionFragment: "totalSupply",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "transferFrom",
     values: [string, string, BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "addManager", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "tokenOfOwnerByIndex",
+    values: [string, BigNumberish]
+  ): string;
   encodeFunctionData(
     functionFragment: "getPlusMemberCount",
     values?: undefined
@@ -66,6 +84,10 @@ export interface PlusMemberSbtInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "safeTransferFrom",
     values: [string, string, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "tokenByIndex",
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "isPlusMember",
@@ -79,12 +101,22 @@ export interface PlusMemberSbtInterface extends utils.Interface {
     functionFragment: "ownerOf",
     values: [BigNumberish]
   ): string;
+  encodeFunctionData(functionFragment: "baseURI", values?: undefined): string;
   encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
   encodeFunctionData(
     functionFragment: "burnMultiple",
     values: [string[]]
   ): string;
+  encodeFunctionData(
+    functionFragment: "setDetailed",
+    values: [string, string]
+  ): string;
   encodeFunctionData(functionFragment: "burn", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "setBaseTokenUri",
+    values: [string]
+  ): string;
+  encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "setApprovalForAll",
     values: [string, boolean]
@@ -92,6 +124,10 @@ export interface PlusMemberSbtInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "removeManager",
     values: [string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "tokenURI",
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "mintMultiple",
@@ -109,22 +145,35 @@ export interface PlusMemberSbtInterface extends utils.Interface {
     functionFragment: "supportsInterface",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "getApproved",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
   decodeFunctionResult(
+    functionFragment: "totalSupply",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "transferFrom",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "addManager", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "tokenOfOwnerByIndex",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "getPlusMemberCount",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "safeTransferFrom",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "tokenByIndex",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -136,12 +185,22 @@ export interface PlusMemberSbtInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "ownerOf", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "baseURI", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "burnMultiple",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "setDetailed",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "burn", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "setBaseTokenUri",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "setApprovalForAll",
     data: BytesLike
@@ -150,6 +209,7 @@ export interface PlusMemberSbtInterface extends utils.Interface {
     functionFragment: "removeManager",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "tokenURI", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "mintMultiple",
     data: BytesLike
@@ -258,6 +318,8 @@ export interface PlusMemberSbt extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
+    name(overrides?: CallOverrides): Promise<[string]>;
+
     getApproved(
       tokenId: BigNumberish,
       overrides?: CallOverrides
@@ -268,6 +330,8 @@ export interface PlusMemberSbt extends BaseContract {
       tokenId: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
+
+    totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferFrom(
       from: string,
@@ -280,6 +344,12 @@ export interface PlusMemberSbt extends BaseContract {
       account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
+
+    tokenOfOwnerByIndex(
+      owner: string,
+      index: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
 
     getPlusMemberCount(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -298,6 +368,11 @@ export interface PlusMemberSbt extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    tokenByIndex(
+      index: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
+
     isPlusMember(userCA: string, overrides?: CallOverrides): Promise<[boolean]>;
 
     getCurrentTokenId(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -307,6 +382,8 @@ export interface PlusMemberSbt extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[string]>;
 
+    baseURI(overrides?: CallOverrides): Promise<[string]>;
+
     balanceOf(owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     burnMultiple(
@@ -314,10 +391,23 @@ export interface PlusMemberSbt extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    setDetailed(
+      name: string,
+      symbol: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     burn(
       userCA: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
+
+    setBaseTokenUri(
+      uri: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    symbol(overrides?: CallOverrides): Promise<[string]>;
 
     setApprovalForAll(
       to: string,
@@ -329,6 +419,11 @@ export interface PlusMemberSbt extends BaseContract {
       account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
+
+    tokenURI(
+      tokenId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[string]>;
 
     mintMultiple(
       userCAs: string[],
@@ -356,6 +451,8 @@ export interface PlusMemberSbt extends BaseContract {
     overrides?: CallOverrides
   ): Promise<boolean>;
 
+  name(overrides?: CallOverrides): Promise<string>;
+
   getApproved(
     tokenId: BigNumberish,
     overrides?: CallOverrides
@@ -366,6 +463,8 @@ export interface PlusMemberSbt extends BaseContract {
     tokenId: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
+
+  totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transferFrom(
     from: string,
@@ -378,6 +477,12 @@ export interface PlusMemberSbt extends BaseContract {
     account: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
+
+  tokenOfOwnerByIndex(
+    owner: string,
+    index: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
 
   getPlusMemberCount(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -396,11 +501,18 @@ export interface PlusMemberSbt extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  tokenByIndex(
+    index: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
   isPlusMember(userCA: string, overrides?: CallOverrides): Promise<boolean>;
 
   getCurrentTokenId(overrides?: CallOverrides): Promise<BigNumber>;
 
   ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+
+  baseURI(overrides?: CallOverrides): Promise<string>;
 
   balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -409,10 +521,23 @@ export interface PlusMemberSbt extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  setDetailed(
+    name: string,
+    symbol: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   burn(
     userCA: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
+
+  setBaseTokenUri(
+    uri: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  symbol(overrides?: CallOverrides): Promise<string>;
 
   setApprovalForAll(
     to: string,
@@ -424,6 +549,8 @@ export interface PlusMemberSbt extends BaseContract {
     account: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
+
+  tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
   mintMultiple(
     userCAs: string[],
@@ -448,6 +575,8 @@ export interface PlusMemberSbt extends BaseContract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
+    name(overrides?: CallOverrides): Promise<string>;
+
     getApproved(
       tokenId: BigNumberish,
       overrides?: CallOverrides
@@ -459,6 +588,8 @@ export interface PlusMemberSbt extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
+
     transferFrom(
       from: string,
       to: string,
@@ -467,6 +598,12 @@ export interface PlusMemberSbt extends BaseContract {
     ): Promise<void>;
 
     addManager(account: string, overrides?: CallOverrides): Promise<void>;
+
+    tokenOfOwnerByIndex(
+      owner: string,
+      index: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     getPlusMemberCount(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -485,17 +622,34 @@ export interface PlusMemberSbt extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    tokenByIndex(
+      index: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     isPlusMember(userCA: string, overrides?: CallOverrides): Promise<boolean>;
 
     getCurrentTokenId(overrides?: CallOverrides): Promise<BigNumber>;
 
     ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
+    baseURI(overrides?: CallOverrides): Promise<string>;
+
     balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     burnMultiple(userCAs: string[], overrides?: CallOverrides): Promise<void>;
 
+    setDetailed(
+      name: string,
+      symbol: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     burn(userCA: string, overrides?: CallOverrides): Promise<void>;
+
+    setBaseTokenUri(uri: string, overrides?: CallOverrides): Promise<void>;
+
+    symbol(overrides?: CallOverrides): Promise<string>;
 
     setApprovalForAll(
       to: string,
@@ -504,6 +658,8 @@ export interface PlusMemberSbt extends BaseContract {
     ): Promise<void>;
 
     removeManager(account: string, overrides?: CallOverrides): Promise<void>;
+
+    tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
     mintMultiple(userCAs: string[], overrides?: CallOverrides): Promise<void>;
 
@@ -584,6 +740,8 @@ export interface PlusMemberSbt extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    name(overrides?: CallOverrides): Promise<BigNumber>;
+
     getApproved(
       tokenId: BigNumberish,
       overrides?: CallOverrides
@@ -595,6 +753,8 @@ export interface PlusMemberSbt extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
+
     transferFrom(
       from: string,
       to: string,
@@ -605,6 +765,12 @@ export interface PlusMemberSbt extends BaseContract {
     addManager(
       account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    tokenOfOwnerByIndex(
+      owner: string,
+      index: BigNumberish,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getPlusMemberCount(overrides?: CallOverrides): Promise<BigNumber>;
@@ -624,6 +790,11 @@ export interface PlusMemberSbt extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    tokenByIndex(
+      index: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     isPlusMember(userCA: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     getCurrentTokenId(overrides?: CallOverrides): Promise<BigNumber>;
@@ -633,6 +804,8 @@ export interface PlusMemberSbt extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    baseURI(overrides?: CallOverrides): Promise<BigNumber>;
+
     balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     burnMultiple(
@@ -640,10 +813,23 @@ export interface PlusMemberSbt extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    setDetailed(
+      name: string,
+      symbol: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     burn(
       userCA: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
+
+    setBaseTokenUri(
+      uri: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
     setApprovalForAll(
       to: string,
@@ -654,6 +840,11 @@ export interface PlusMemberSbt extends BaseContract {
     removeManager(
       account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    tokenURI(
+      tokenId: BigNumberish,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     mintMultiple(
@@ -683,6 +874,8 @@ export interface PlusMemberSbt extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     getApproved(
       tokenId: BigNumberish,
       overrides?: CallOverrides
@@ -694,6 +887,8 @@ export interface PlusMemberSbt extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
+    totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     transferFrom(
       from: string,
       to: string,
@@ -704,6 +899,12 @@ export interface PlusMemberSbt extends BaseContract {
     addManager(
       account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    tokenOfOwnerByIndex(
+      owner: string,
+      index: BigNumberish,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getPlusMemberCount(
@@ -725,6 +926,11 @@ export interface PlusMemberSbt extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
+    tokenByIndex(
+      index: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     isPlusMember(
       userCA: string,
       overrides?: CallOverrides
@@ -737,6 +943,8 @@ export interface PlusMemberSbt extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    baseURI(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     balanceOf(
       owner: string,
       overrides?: CallOverrides
@@ -747,10 +955,23 @@ export interface PlusMemberSbt extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
+    setDetailed(
+      name: string,
+      symbol: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
     burn(
       userCA: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
+
+    setBaseTokenUri(
+      uri: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setApprovalForAll(
       to: string,
@@ -761,6 +982,11 @@ export interface PlusMemberSbt extends BaseContract {
     removeManager(
       account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    tokenURI(
+      tokenId: BigNumberish,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     mintMultiple(

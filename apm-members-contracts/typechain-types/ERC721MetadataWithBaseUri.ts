@@ -17,31 +17,19 @@ import { FunctionFragment, Result, EventFragment } from "@ethersproject/abi";
 import { Listener, Provider } from "@ethersproject/providers";
 import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 
-export interface ERC721FullMockInterface extends utils.Interface {
+export interface ERC721MetadataWithBaseUriInterface extends utils.Interface {
   functions: {
     "supportsInterface(bytes4)": FunctionFragment;
     "name()": FunctionFragment;
     "getApproved(uint256)": FunctionFragment;
     "approve(address,uint256)": FunctionFragment;
-    "setTokenURI(uint256,string)": FunctionFragment;
-    "totalSupply()": FunctionFragment;
     "transferFrom(address,address,uint256)": FunctionFragment;
-    "tokenOfOwnerByIndex(address,uint256)": FunctionFragment;
-    "mint(address,uint256)": FunctionFragment;
     "safeTransferFrom(address,address,uint256)": FunctionFragment;
-    "burn(uint256)": FunctionFragment;
-    "exists(uint256)": FunctionFragment;
-    "tokenByIndex(uint256)": FunctionFragment;
-    "mintWithTokenURI(address,uint256,string)": FunctionFragment;
     "ownerOf(uint256)": FunctionFragment;
     "baseURI()": FunctionFragment;
     "balanceOf(address)": FunctionFragment;
-    "tokensOfOwner(address)": FunctionFragment;
     "symbol()": FunctionFragment;
-    "addMinter(address)": FunctionFragment;
-    "renounceMinter()": FunctionFragment;
     "setApprovalForAll(address,bool)": FunctionFragment;
-    "isMinter(address)": FunctionFragment;
     "tokenURI(uint256)": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
   };
@@ -60,41 +48,12 @@ export interface ERC721FullMockInterface extends utils.Interface {
     values: [string, BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "setTokenURI",
-    values: [BigNumberish, string]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "totalSupply",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
     functionFragment: "transferFrom",
     values: [string, string, BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "tokenOfOwnerByIndex",
-    values: [string, BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "mint",
-    values: [string, BigNumberish]
-  ): string;
-  encodeFunctionData(
     functionFragment: "safeTransferFrom",
     values: [string, string, BigNumberish]
-  ): string;
-  encodeFunctionData(functionFragment: "burn", values: [BigNumberish]): string;
-  encodeFunctionData(
-    functionFragment: "exists",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "tokenByIndex",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "mintWithTokenURI",
-    values: [string, BigNumberish, string]
   ): string;
   encodeFunctionData(
     functionFragment: "ownerOf",
@@ -102,21 +61,11 @@ export interface ERC721FullMockInterface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "baseURI", values?: undefined): string;
   encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
-  encodeFunctionData(
-    functionFragment: "tokensOfOwner",
-    values: [string]
-  ): string;
   encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
-  encodeFunctionData(functionFragment: "addMinter", values: [string]): string;
-  encodeFunctionData(
-    functionFragment: "renounceMinter",
-    values?: undefined
-  ): string;
   encodeFunctionData(
     functionFragment: "setApprovalForAll",
     values: [string, boolean]
   ): string;
-  encodeFunctionData(functionFragment: "isMinter", values: [string]): string;
   encodeFunctionData(
     functionFragment: "tokenURI",
     values: [BigNumberish]
@@ -137,54 +86,21 @@ export interface ERC721FullMockInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "setTokenURI",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "totalSupply",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
     functionFragment: "transferFrom",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "tokenOfOwnerByIndex",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
-  decodeFunctionResult(
     functionFragment: "safeTransferFrom",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "burn", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "exists", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "tokenByIndex",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "mintWithTokenURI",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "ownerOf", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "baseURI", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "tokensOfOwner",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "addMinter", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "renounceMinter",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(
     functionFragment: "setApprovalForAll",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "isMinter", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "tokenURI", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "isApprovedForAll",
@@ -192,27 +108,15 @@ export interface ERC721FullMockInterface extends utils.Interface {
   ): Result;
 
   events: {
-    "MinterAdded(address)": EventFragment;
-    "MinterRemoved(address)": EventFragment;
     "Transfer(address,address,uint256)": EventFragment;
     "Approval(address,address,uint256)": EventFragment;
     "ApprovalForAll(address,address,bool)": EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "MinterAdded"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "MinterRemoved"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ApprovalForAll"): EventFragment;
 }
-
-export type MinterAddedEvent = TypedEvent<[string], { account: string }>;
-
-export type MinterAddedEventFilter = TypedEventFilter<MinterAddedEvent>;
-
-export type MinterRemovedEvent = TypedEvent<[string], { account: string }>;
-
-export type MinterRemovedEventFilter = TypedEventFilter<MinterRemovedEvent>;
 
 export type TransferEvent = TypedEvent<
   [string, string, BigNumber],
@@ -235,12 +139,12 @@ export type ApprovalForAllEvent = TypedEvent<
 
 export type ApprovalForAllEventFilter = TypedEventFilter<ApprovalForAllEvent>;
 
-export interface ERC721FullMock extends BaseContract {
+export interface ERC721MetadataWithBaseUri extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: ERC721FullMockInterface;
+  interface: ERC721MetadataWithBaseUriInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -280,28 +184,8 @@ export interface ERC721FullMock extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    setTokenURI(
-      tokenId: BigNumberish,
-      uri: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
-    totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
-
     transferFrom(
       from: string,
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
-    tokenOfOwnerByIndex(
-      owner: string,
-      index: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
-
-    mint(
       to: string,
       tokenId: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -322,28 +206,6 @@ export interface ERC721FullMock extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    burn(
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
-    exists(
-      tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
-
-    tokenByIndex(
-      index: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
-
-    mintWithTokenURI(
-      to: string,
-      tokenId: BigNumberish,
-      tokenURI: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
     ownerOf(
       tokenId: BigNumberish,
       overrides?: CallOverrides
@@ -353,29 +215,13 @@ export interface ERC721FullMock extends BaseContract {
 
     balanceOf(owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    tokensOfOwner(
-      owner: string,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber[]]>;
-
     symbol(overrides?: CallOverrides): Promise<[string]>;
-
-    addMinter(
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
-    renounceMinter(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
 
     setApprovalForAll(
       to: string,
       approved: boolean,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
-
-    isMinter(account: string, overrides?: CallOverrides): Promise<[boolean]>;
 
     tokenURI(
       tokenId: BigNumberish,
@@ -407,28 +253,8 @@ export interface ERC721FullMock extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  setTokenURI(
-    tokenId: BigNumberish,
-    uri: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
-  totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
-
   transferFrom(
     from: string,
-    to: string,
-    tokenId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
-  tokenOfOwnerByIndex(
-    owner: string,
-    index: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
-
-  mint(
     to: string,
     tokenId: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
@@ -449,51 +275,19 @@ export interface ERC721FullMock extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  burn(
-    tokenId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
-  exists(tokenId: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
-
-  tokenByIndex(
-    index: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
-
-  mintWithTokenURI(
-    to: string,
-    tokenId: BigNumberish,
-    tokenURI: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
   ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
   baseURI(overrides?: CallOverrides): Promise<string>;
 
   balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-  tokensOfOwner(owner: string, overrides?: CallOverrides): Promise<BigNumber[]>;
-
   symbol(overrides?: CallOverrides): Promise<string>;
-
-  addMinter(
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
-  renounceMinter(
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
 
   setApprovalForAll(
     to: string,
     approved: boolean,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
-
-  isMinter(account: string, overrides?: CallOverrides): Promise<boolean>;
 
   tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
@@ -522,32 +316,12 @@ export interface ERC721FullMock extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    setTokenURI(
-      tokenId: BigNumberish,
-      uri: string,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
-
     transferFrom(
       from: string,
       to: string,
       tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
-
-    tokenOfOwnerByIndex(
-      owner: string,
-      index: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    mint(
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
 
     "safeTransferFrom(address,address,uint256)"(
       from: string,
@@ -564,46 +338,19 @@ export interface ERC721FullMock extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    burn(tokenId: BigNumberish, overrides?: CallOverrides): Promise<void>;
-
-    exists(tokenId: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
-
-    tokenByIndex(
-      index: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    mintWithTokenURI(
-      to: string,
-      tokenId: BigNumberish,
-      tokenURI: string,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
-
     ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
     baseURI(overrides?: CallOverrides): Promise<string>;
 
     balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-    tokensOfOwner(
-      owner: string,
-      overrides?: CallOverrides
-    ): Promise<BigNumber[]>;
-
     symbol(overrides?: CallOverrides): Promise<string>;
-
-    addMinter(account: string, overrides?: CallOverrides): Promise<void>;
-
-    renounceMinter(overrides?: CallOverrides): Promise<void>;
 
     setApprovalForAll(
       to: string,
       approved: boolean,
       overrides?: CallOverrides
     ): Promise<void>;
-
-    isMinter(account: string, overrides?: CallOverrides): Promise<boolean>;
 
     tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
@@ -615,12 +362,6 @@ export interface ERC721FullMock extends BaseContract {
   };
 
   filters: {
-    "MinterAdded(address)"(account?: string | null): MinterAddedEventFilter;
-    MinterAdded(account?: string | null): MinterAddedEventFilter;
-
-    "MinterRemoved(address)"(account?: string | null): MinterRemovedEventFilter;
-    MinterRemoved(account?: string | null): MinterRemovedEventFilter;
-
     "Transfer(address,address,uint256)"(
       from?: string | null,
       to?: string | null,
@@ -674,28 +415,8 @@ export interface ERC721FullMock extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    setTokenURI(
-      tokenId: BigNumberish,
-      uri: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
-
     transferFrom(
       from: string,
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    tokenOfOwnerByIndex(
-      owner: string,
-      index: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    mint(
       to: string,
       tokenId: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -716,28 +437,6 @@ export interface ERC721FullMock extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    burn(
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    exists(
-      tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    tokenByIndex(
-      index: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    mintWithTokenURI(
-      to: string,
-      tokenId: BigNumberish,
-      tokenURI: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
     ownerOf(
       tokenId: BigNumberish,
       overrides?: CallOverrides
@@ -747,26 +446,13 @@ export interface ERC721FullMock extends BaseContract {
 
     balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-    tokensOfOwner(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
-
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
-
-    addMinter(
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    renounceMinter(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
 
     setApprovalForAll(
       to: string,
       approved: boolean,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
-
-    isMinter(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     tokenURI(
       tokenId: BigNumberish,
@@ -799,28 +485,8 @@ export interface ERC721FullMock extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    setTokenURI(
-      tokenId: BigNumberish,
-      uri: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
     transferFrom(
       from: string,
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    tokenOfOwnerByIndex(
-      owner: string,
-      index: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    mint(
       to: string,
       tokenId: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -841,28 +507,6 @@ export interface ERC721FullMock extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    burn(
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    exists(
-      tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    tokenByIndex(
-      index: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    mintWithTokenURI(
-      to: string,
-      tokenId: BigNumberish,
-      tokenURI: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
     ownerOf(
       tokenId: BigNumberish,
       overrides?: CallOverrides
@@ -875,31 +519,12 @@ export interface ERC721FullMock extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    tokensOfOwner(
-      owner: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    addMinter(
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    renounceMinter(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
 
     setApprovalForAll(
       to: string,
       approved: boolean,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    isMinter(
-      account: string,
-      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     tokenURI(

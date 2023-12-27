@@ -32,6 +32,7 @@ export interface ERC721MintableBurnableImplInterface extends utils.Interface {
     "tokenByIndex(uint256)": FunctionFragment;
     "mintWithTokenURI(address,uint256,string)": FunctionFragment;
     "ownerOf(uint256)": FunctionFragment;
+    "baseURI()": FunctionFragment;
     "balanceOf(address)": FunctionFragment;
     "symbol()": FunctionFragment;
     "addMinter(address)": FunctionFragment;
@@ -88,6 +89,7 @@ export interface ERC721MintableBurnableImplInterface extends utils.Interface {
     functionFragment: "ownerOf",
     values: [BigNumberish]
   ): string;
+  encodeFunctionData(functionFragment: "baseURI", values?: undefined): string;
   encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
   encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
   encodeFunctionData(functionFragment: "addMinter", values: [string]): string;
@@ -146,6 +148,7 @@ export interface ERC721MintableBurnableImplInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "ownerOf", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "baseURI", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "addMinter", data: BytesLike): Result;
@@ -311,6 +314,8 @@ export interface ERC721MintableBurnableImpl extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[string]>;
 
+    baseURI(overrides?: CallOverrides): Promise<[string]>;
+
     balanceOf(owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
@@ -417,6 +422,8 @@ export interface ERC721MintableBurnableImpl extends BaseContract {
 
   ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
+  baseURI(overrides?: CallOverrides): Promise<string>;
+
   balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
@@ -516,6 +523,8 @@ export interface ERC721MintableBurnableImpl extends BaseContract {
     ): Promise<boolean>;
 
     ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+
+    baseURI(overrides?: CallOverrides): Promise<string>;
 
     balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -660,6 +669,8 @@ export interface ERC721MintableBurnableImpl extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    baseURI(overrides?: CallOverrides): Promise<BigNumber>;
+
     balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
@@ -769,6 +780,8 @@ export interface ERC721MintableBurnableImpl extends BaseContract {
       tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
+
+    baseURI(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     balanceOf(
       owner: string,

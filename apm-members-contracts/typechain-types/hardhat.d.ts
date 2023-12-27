@@ -501,6 +501,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ERC721MetadataMintable__factory>;
     getContractFactory(
+      name: "ERC721MetadataWithBaseUri",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ERC721MetadataWithBaseUri__factory>;
+    getContractFactory(
       name: "ERC721Mintable",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ERC721Mintable__factory>;
@@ -1163,6 +1167,11 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.ERC721MetadataMintable>;
+    getContractAt(
+      name: "ERC721MetadataWithBaseUri",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ERC721MetadataWithBaseUri>;
     getContractAt(
       name: "ERC721Mintable",
       address: string,
