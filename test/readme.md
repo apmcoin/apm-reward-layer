@@ -1,17 +1,21 @@
 # RAPM-Test-And-Batch
 RAPM Mainnet Stress Test & Batch call sample code using ethers.js
 
-RAPM Maneger EOA 1 - Mainnet Dev Master
-0x176EE7550A5B4506937696ceF7BCf4a1296f6270
+RAPM Manager EOA
+`0x176EE7550A5B4506937696ceF7BCf4a1296f6270` : RAPM Admin
+`0xc647E433F2Dd94C28505923dF374Aba37d5Beb24` : RAPM Dev 1
+`0x1c33156501204E3A0b00d8D506eD95892767d76b` : RAPM Dev 2
+`-` : RAPM Dev 3
+`-` : Members User Manager
+`-` : Members General Manager
 
-RAPM Maneger EOA 1 - Mainnet Dev for Batch
-(unused)0xc647E433F2Dd94C28505923dF374Aba37d5Beb24
-0x1c33156501204E3A0b00d8D506eD95892767d76b
+Members CA (Prod)
+`-` : UserFactory
+`-` : PlusMemberSbt
+`-` : a.point
 
-UserFactory CA - V1
-(unused)0xE003373aa71F3a1d5e93F58Be07604B8B5fF4169
-(unused)0xF38211DF9ccD073Ec4856213d00d224C7e2340DA
-0x62a8f4FBE767f5B73C62Fc6999dFdd38b7166ee8
+Members CA (Stg)
+`-` : UserFactory
+`-` : PlusMemberSbt
+`-` : a.point
 
-PlusMemberSbt CA - V1
-0x559eAc795F87c783972116E16070481924368b9E
