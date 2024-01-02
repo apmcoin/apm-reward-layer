@@ -7,8 +7,8 @@ Off-chain reward bridging mainnet designed for real world business
 
 Since APMs are fixed assets that are no longer being issued, the RAPM used to record them is stuck on the mainnet and out of circulation for a period of time.
 
-
 ## Detail Infomation
+- [apM Reward Layer Explorer](https://scan.apm-coin.com/)
 - [Building Core](./core/README.md)
 - [Validator Setup Ref](https://openethereum.github.io/Validator-Set-Tutorial-1)
 - [RAPM Chainspec](./chainspec/genesis.json)
