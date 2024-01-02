@@ -113,7 +113,7 @@ async function createUser(userId, nonce, attempt = 0) {
         .on('end', async () => {
             for (let userId of results) {
                 nonce = await createUser(userId, nonce);  // 순차적으로 UUID 처리
-                await new Promise(resolve => setTimeout(resolve, 6000));
+                await new Promise(resolve => setTimeout(resolve, 60000));
             }
         });
 })();
