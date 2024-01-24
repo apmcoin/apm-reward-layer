@@ -29,7 +29,7 @@ const config: HardhatUserConfig = {
       url: process.env.RAPM_RPC_URL,
       chainId: +(process.env.RAPM_CHAIN_ID as string),
       accounts: [process.env.PRIVATE_KEY as string],
-      gasPrice: 2_000_000_000,
+      gasPrice: 4_000_000_000,
     }
   },
   gasReporter: {
