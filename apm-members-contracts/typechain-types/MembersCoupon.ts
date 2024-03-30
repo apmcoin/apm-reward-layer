@@ -26,6 +26,7 @@ export interface MembersCouponInterface extends utils.Interface {
     "approve(address,uint256)": FunctionFragment;
     "totalSupply()": FunctionFragment;
     "transferFrom(address,address,uint256)": FunctionFragment;
+    "mintUsingToken(address,uint256,address)": FunctionFragment;
     "addManager(address)": FunctionFragment;
     "tokenOfOwnerByIndex(address,uint256)": FunctionFragment;
     "safeTransferFrom(address,address,uint256)": FunctionFragment;
@@ -68,6 +69,10 @@ export interface MembersCouponInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "transferFrom",
     values: [string, string, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "mintUsingToken",
+    values: [string, BigNumberish, string]
   ): string;
   encodeFunctionData(functionFragment: "addManager", values: [string]): string;
   encodeFunctionData(
@@ -148,6 +153,10 @@ export interface MembersCouponInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "transferFrom",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "mintUsingToken",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "addManager", data: BytesLike): Result;
@@ -326,6 +335,13 @@ export interface MembersCoupon extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    mintUsingToken(
+      userCA: string,
+      amount: BigNumberish,
+      tokenAddress: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     addManager(
       account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -451,6 +467,13 @@ export interface MembersCoupon extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  mintUsingToken(
+    userCA: string,
+    amount: BigNumberish,
+    tokenAddress: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   addManager(
     account: string,
     overrides?: Overrides & { from?: string | Promise<string> }
@@ -566,6 +589,13 @@ export interface MembersCoupon extends BaseContract {
       tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    mintUsingToken(
+      userCA: string,
+      amount: BigNumberish,
+      tokenAddress: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     addManager(account: string, overrides?: CallOverrides): Promise<void>;
 
@@ -736,6 +766,13 @@ export interface MembersCoupon extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    mintUsingToken(
+      userCA: string,
+      amount: BigNumberish,
+      tokenAddress: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     addManager(
       account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -859,6 +896,13 @@ export interface MembersCoupon extends BaseContract {
       from: string,
       to: string,
       tokenId: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    mintUsingToken(
+      userCA: string,
+      amount: BigNumberish,
+      tokenAddress: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 

@@ -2,6 +2,7 @@ pragma solidity ^0.5.6;
 
 import "./rapm-contracts/token/ERC721/ERC721Full.sol";
 import "./ManagerRole.sol";
+import "./MembersPoint.sol";
 
 contract MembersCoupon is ERC721Full, ManagerRole {
   using SafeMath for uint256;
@@ -31,6 +32,11 @@ contract MembersCoupon is ERC721Full, ManagerRole {
 
   function getTotalCount() public view returns(uint256) {
     return totalCount;
+  }
+
+  function mintUsingToken(address userCA, uint256 amount, address tokenAddress) public onlyManager returns(uint256 newTokenId) {
+    MembersPoint(tokenAddress).burn(userCA, amount);
+    return mintNext(userCA);
   }
 
   function mintNext(address userCA) public onlyManager returns(uint256 newTokenId) {
