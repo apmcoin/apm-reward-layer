@@ -36,9 +36,9 @@ contract BusCard is ERC721Full, ManagerRole {
         _mintNext(userCA);
       }
 
-      totalRideCount += totalRideCount.add(1);
-      fromRideCount[from] += fromRideCount[from].add(1);
-      userRideCount[getTokenId(userCA)] += userRideCount[getTokenId(userCA)].add(1);
+      totalRideCount = totalRideCount.add(1);
+      fromRideCount[from] = fromRideCount[from].add(1);
+      userRideCount[getTokenId(userCA)] = userRideCount[getTokenId(userCA)].add(1);
 
       emit Rided(userCA, from, userType, timestmap);
     }
