@@ -15,6 +15,7 @@ contract BusCard is ERC721Full, ManagerRole {
 
     uint256 private totalRideCount;
     mapping(uint256 => uint256) private fromRideCount;
+    mapping(uint256 => uint256) private userTypeCount;
     mapping(uint256 => uint256) private userRideCount;
 
     constructor() public ERC721Full(_name, _symbol) {}
@@ -25,6 +26,10 @@ contract BusCard is ERC721Full, ManagerRole {
 
     function getFromRideCount(uint256 from) public view returns(uint256) {
       return fromRideCount[from];
+    }
+
+    function getUserTypeCount(uint256 userType) public view returns(uint256) {
+      return userTypeCount[userType];
     }
 
     function getUserRideCount(address userCA) public view returns(uint256) {
@@ -38,6 +43,7 @@ contract BusCard is ERC721Full, ManagerRole {
 
       totalRideCount = totalRideCount.add(1);
       fromRideCount[from] = fromRideCount[from].add(1);
+      userTypeCount[userType] = userTypeCount[userType].add(1);
       userRideCount[getTokenId(userCA)] = userRideCount[getTokenId(userCA)].add(1);
 
       emit Rided(userCA, from, userType, timestmap);
