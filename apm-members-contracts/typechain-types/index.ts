@@ -2,6 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { AbstractUser } from "./AbstractUser";
+export type { BusCard } from "./BusCard";
 export type { BusRideManager } from "./BusRideManager";
 export type { ManagerRole } from "./ManagerRole";
 export type { MembersCoupon } from "./MembersCoupon";
@@ -139,6 +140,7 @@ export type { ReentrancyGuard } from "./ReentrancyGuard";
 export type { UserFactory } from "./UserFactory";
 
 export { AbstractUser__factory } from "./factories/AbstractUser__factory";
+export { BusCard__factory } from "./factories/BusCard__factory";
 export { BusRideManager__factory } from "./factories/BusRideManager__factory";
 export { ManagerRole__factory } from "./factories/ManagerRole__factory";
 export { MembersCoupon__factory } from "./factories/MembersCoupon__factory";
